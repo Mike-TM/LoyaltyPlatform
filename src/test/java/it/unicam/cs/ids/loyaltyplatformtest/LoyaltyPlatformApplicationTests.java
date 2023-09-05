@@ -1,4 +1,4 @@
-package it.unicam.cs.ids.loyaltyplatform;
+package it.unicam.cs.ids.loyaltyplatformtest;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
