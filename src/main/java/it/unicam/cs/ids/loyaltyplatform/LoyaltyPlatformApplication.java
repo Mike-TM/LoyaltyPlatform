@@ -1,4 +1,4 @@
-package com.example.loyaltyplatform;
+package it.unicam.cs.ids.loyaltyplatform;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
