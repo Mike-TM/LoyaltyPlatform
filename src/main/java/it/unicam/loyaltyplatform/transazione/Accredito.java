@@ -1,4 +1,4 @@
-package dadefinire.todo;
+package it.unicam.loyaltyplatform.transazione;
 
 import java.util.Date;
 

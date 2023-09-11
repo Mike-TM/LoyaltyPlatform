@@ -1,4 +1,4 @@
 package dadefinire.todo;
 
-public class Cliente {
+public class Commesso {
 }

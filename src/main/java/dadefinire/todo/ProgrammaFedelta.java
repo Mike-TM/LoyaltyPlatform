@@ -1,4 +1,5 @@
 package dadefinire.todo;
 
-public interface ProgrammaFedelta {
+public class ProgrammaFedelta {
+
 }
