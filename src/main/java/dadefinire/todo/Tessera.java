@@ -1,7 +1,7 @@
 package dadefinire.todo;
 
+import it.unicam.loyaltyplatform.accredito.Accredito;
 import it.unicam.loyaltyplatform.cliente.Cliente;
-import it.unicam.loyaltyplatform.transazione.Accredito;
 
 import java.util.ArrayList;
 import java.util.List;
