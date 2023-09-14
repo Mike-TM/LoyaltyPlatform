@@ -21,6 +21,7 @@ public class AccreditoService {
         return accreditoRepository.findAll();
     }
 
+    //esempio POST
     @PostMapping
     public void aggiungiAccredito(Accredito accredito) {
         System.out.println(accredito);

@@ -19,6 +19,7 @@ public class AccreditoController {
         this.accreditoService = accreditoService;
     }
 
+    //metodo esempio GET
     @GetMapping
     public List<Accredito> getAccrediti(){
         return accreditoService.getAccrediti();

@@ -1,8 +1,8 @@
 package it.unicam.loyaltyplatform.accredito;
 
-import dadefinire.todo.*;
 import java.util.Date;
 import it.unicam.loyaltyplatform.azienda.Azienda;
+import it.unicam.loyaltyplatform.tessera.Tessera;
 
 public class Accredito {
 
