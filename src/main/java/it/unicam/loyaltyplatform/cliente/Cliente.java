@@ -1,9 +1,19 @@
 package it.unicam.loyaltyplatform.cliente;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity @Table
 public class Cliente {
+    @Id @GeneratedValue
     private Long id;
     private String name;
     private String email;
+
+    public Cliente() {
+    }
 
     public Cliente(Long id, String name, String email) {
         this.id = id;
@@ -40,5 +50,12 @@ public class Cliente {
         this.email = email;
     }
 
-
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }
