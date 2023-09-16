@@ -40,6 +40,6 @@ public class ClienteService {
         Optional<Cliente> cliente = clienteRepository.findClienteById(id);
         if(cliente.isPresent()) {
             return cliente.get();
-        }else throw new IllegalStateException("id non presente");
+        }else throw new IllegalStateException("id cliente non presente");
     }
 }

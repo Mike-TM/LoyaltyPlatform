@@ -26,6 +26,7 @@ public class ClienteController {
         return clienteService.findClienteById(id);
     }
 
+
     @PostMapping
     public void registraNuovoCliente(@RequestBody Cliente cliente) {
         clienteService.addNewCliente(cliente);
