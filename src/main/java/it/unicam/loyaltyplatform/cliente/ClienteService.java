@@ -27,8 +27,8 @@ public class ClienteService {
 
     @PostMapping
     public void addNewCliente(Cliente nuovoCliente){
-        Optional<Azienda> clienteByEmail = clienteRepository
-                .findAziendaByEmail(nuovoCliente.getEmail());
+        Optional<Cliente> clienteByEmail = clienteRepository
+                .findClienteByEmail(nuovoCliente.getEmail());
         if(clienteByEmail.isPresent()) {
             throw new IllegalStateException("email già registrata");
         }
@@ -36,4 +36,10 @@ public class ClienteService {
         System.out.print(nuovoCliente);
     }
 
+    public Cliente findClienteById(long id) {
+        Optional<Cliente> cliente = clienteRepository.findClienteById(id);
+        if(cliente.isPresent()) {
+            return cliente.get();
+        }else throw new IllegalStateException("id non presente");
+    }
 }

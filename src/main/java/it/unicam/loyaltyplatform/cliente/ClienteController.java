@@ -21,8 +21,14 @@ public class ClienteController {
         return clienteService.getClienti();
     }
 
+    @GetMapping(path = "/{id}")
+    public Cliente getClienteById(@PathVariable long id) throws Exception {
+        return clienteService.findClienteById(id);
+    }
+
     @PostMapping
     public void registraNuovoCliente(@RequestBody Cliente cliente) {
         clienteService.addNewCliente(cliente);
     }
+
 }
