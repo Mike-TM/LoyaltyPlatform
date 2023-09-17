@@ -2,40 +2,24 @@ package it.unicam.loyaltyplatform.tessera;
 
 import it.unicam.loyaltyplatform.cliente.Cliente;
 import jakarta.persistence.*;
+import lombok.*;
 
-@Entity @Table
+@Getter @Setter
+@ToString
+@AllArgsConstructor @NoArgsConstructor
+@Entity @Table(name = "tessera")
 public class Tessera {
 
-    @Id @GeneratedValue
-    private Long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_tessera", nullable = false)
+    private Long idTessera;
 
-    @OneToOne
+    @OneToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
     private Cliente titolareTessera;
-
-    public Tessera() {
-    }
-
-    public Tessera(Cliente cliente, Long id ) {
-        this.id=id;
-        this.titolareTessera = cliente;
-    }
 
     public Tessera(Cliente cliente){
         this.titolareTessera=cliente;
     }
-
-    public Cliente getTitolareTessera() {
-        return titolareTessera;
-    }
-
-    public void setTitolareTessera(Cliente nuovoTitolare){
-        this.titolareTessera=nuovoTitolare;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
 
 }
 

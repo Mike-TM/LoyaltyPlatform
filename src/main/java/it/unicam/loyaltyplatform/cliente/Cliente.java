@@ -1,58 +1,30 @@
 package it.unicam.loyaltyplatform.cliente;
 
 import jakarta.persistence.*;
+import lombok.*;
 
-@Entity @Table
+@ToString
+@Setter
+@Getter
+@AllArgsConstructor @NoArgsConstructor
+@Entity @Table(name = "cliente")
 public class Cliente {
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private Long id;
-    private String name;
+    @Id
+    @Column(name = "id_cliente", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long idCliente;
+
+    @Column(name = "nome",
+            columnDefinition = "TEXT")
+    private String nome;
+
+    @Column(name = "email", columnDefinition = "TEXT")
     private String email;
 
-    public Cliente() {
-    }
-
-    public Cliente(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
+    public Cliente(String nome, String email){
+        this.nome = nome;
         this.email = email;
     }
 
-    public Cliente(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

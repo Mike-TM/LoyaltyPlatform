@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface TesseraRepository extends JpaRepository<Tessera,Long> {
 
-    Optional<Tessera> findTesseraById(long id);
+    Optional<Tessera> findTesseraByIdTessera(long id);
 
 
 }

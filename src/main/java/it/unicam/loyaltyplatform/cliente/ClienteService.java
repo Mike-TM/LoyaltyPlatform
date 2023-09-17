@@ -37,7 +37,7 @@ public class ClienteService {
     }
 
     public Cliente findClienteById(long id) {
-        Optional<Cliente> cliente = clienteRepository.findClienteById(id);
+        Optional<Cliente> cliente = clienteRepository.findClienteByIdCliente(id);
         if(cliente.isPresent()) {
             return cliente.get();
         }else throw new IllegalStateException("id cliente non presente");

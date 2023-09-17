@@ -1,5 +1,6 @@
 
 package it.unicam.loyaltyplatform.tessera;
+import it.unicam.loyaltyplatform.dtos.TesseraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,8 +30,8 @@ public class TesseraController {
     }
 
     @PostMapping
-    public void registraNuovaTessera(@RequestBody Tessera tessera){
-        tesseraService.aggiungiTessera(tessera);
+    public void registraNuovaCarta(@RequestBody TesseraDTO TesseraDto) throws Exception{
+        tesseraService.aggiungiTessera(TesseraDto.getClienteId());
     }
 }
 
