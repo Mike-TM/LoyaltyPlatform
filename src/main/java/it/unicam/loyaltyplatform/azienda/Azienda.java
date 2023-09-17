@@ -4,37 +4,86 @@ import it.unicam.loyaltyplatform.accredito.Accredito;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Getter @Setter @NoArgsConstructor
-@Entity @Table
+@Getter
+@Entity(name = "Azienda")
+@Table(
+        name = "azienda",
+        uniqueConstraints = {
+                @UniqueConstraint(name = "email_unica", columnNames = "email")
+        }
+)
+
 public class Azienda {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    @Column(name = "id_azienda")
+    @Column(
+            name = "id_azienda",
+            updatable = false
+    )
     private Long id;
-    @Column(name = "nome_azienda", nullable = false)
-    private String name;
-    @Column(name = "email_azienda", nullable = false, unique = true)
+
+    @Column(
+            name = "nome",
+            nullable = false,
+            columnDefinition = "VARCHAR(40)"
+    )
+    private String nome;
+
+    @Column(
+            name = "email",
+            nullable = false,
+            columnDefinition = "VARCHAR(320)"
+    )
     private String email;
 
-    @OneToMany(mappedBy = "azienda")
+    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
     private List<ProgrammaFedelta> programmiFedelta;
 
     @OneToMany(mappedBy = "azienda")
     private List<Accredito> accrediti;
 
-    public Azienda(Long id, String name, String email) {
-        this.id = id;
-        this.name = name;
-        this.email = email;
+    /**
+     * Costruttore di default
+     */
+    public Azienda() {
+        programmiFedelta = new ArrayList<>();
+        accrediti = new ArrayList<>();
     }
 
-    public Azienda(String name, String email) {
-        this.name = name;
+    /**
+     * @param id
+     * @param nomeAzienda
+     * @param email
+     */
+    public Azienda(Long id, String nomeAzienda, String email) {
+        this.id = id;
+        this.nome = nomeAzienda;
+        this.email = email;
+        programmiFedelta = new ArrayList<>();
+        accrediti = new ArrayList<>();
+    }
+
+    /**
+     * Costruttore senza id, il quale verrà generato dal DB
+     * @param nome
+     * @param email
+     */
+    public Azienda(String nome, String email) {
+        this.nome = nome;
+        this.email = email;
+        programmiFedelta = new ArrayList<>();
+        accrediti = new ArrayList<>();
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setEmail(String email) {
         this.email = email;
     }
 
@@ -42,7 +91,7 @@ public class Azienda {
     public String toString() {
         return "Azienda{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }
