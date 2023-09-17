@@ -1,8 +1,6 @@
-
+/*
 package it.unicam.loyaltyplatform.accredito;
 
-import it.unicam.loyaltyplatform.azienda.Azienda;
-import it.unicam.loyaltyplatform.dtos.AccreditoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,11 +24,8 @@ public class AccreditoService {
 
     //esempio POST
     @PostMapping
-    public void aggiungiAccredito(Long aziendaId,Long tesseraId) {
-        //get tessera by id
-        //get azienda by id
-        //creo accredito con questi dati e salvo nel repository
-
+    public void aggiungiAccredito(Accredito accredito) {
+        System.out.println(accredito);
     }
 }
-
+*/

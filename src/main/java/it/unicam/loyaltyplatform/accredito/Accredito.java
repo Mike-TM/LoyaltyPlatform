@@ -15,11 +15,20 @@ public class Accredito {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_tessera", nullable = false, updatable = false)
+    @JoinColumn(
+            name = "id_tessera",
+            referencedColumnName = "id_tessera",
+            nullable = false,
+            updatable = false)
     private final Tessera tessera;
 
     @ManyToOne
-    @JoinColumn(name = "id_azienda", nullable = false, updatable = false)
+    @JoinColumn(
+            name = "id_azienda",
+            referencedColumnName = "id_azienda",
+            nullable = false,
+            updatable = false
+    )
     private final Azienda azienda;
 
     @Column(name = "data", nullable = false)

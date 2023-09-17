@@ -1,5 +1,6 @@
 package it.unicam.loyaltyplatform.azienda;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.accredito.Accredito;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.persistence.*;
@@ -16,9 +17,7 @@ import java.util.List;
                 @UniqueConstraint(name = "email_unica", columnNames = "email")
         }
 )
-
 public class Azienda {
-
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(
             name = "id_azienda",
@@ -40,29 +39,18 @@ public class Azienda {
     )
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
-    private List<ProgrammaFedelta> programmiFedelta;
+    private final List<ProgrammaFedelta> programmiFedelta;
 
-    @OneToMany(mappedBy = "azienda")
-    private List<Accredito> accrediti;
+    @JsonIgnore
+    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
+    private final List<Accredito> accrediti;
 
     /**
      * Costruttore di default
      */
     public Azienda() {
-        programmiFedelta = new ArrayList<>();
-        accrediti = new ArrayList<>();
-    }
-
-    /**
-     * @param id
-     * @param nomeAzienda
-     * @param email
-     */
-    public Azienda(Long id, String nomeAzienda, String email) {
-        this.id = id;
-        this.nome = nomeAzienda;
-        this.email = email;
         programmiFedelta = new ArrayList<>();
         accrediti = new ArrayList<>();
     }

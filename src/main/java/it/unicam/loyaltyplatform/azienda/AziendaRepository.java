@@ -9,6 +9,7 @@ import java.util.Optional;
 @Repository
 public interface AziendaRepository extends JpaRepository<Azienda,Long> {
 
-    @Query("SELECT a from Azienda a WHERE a.email = ?1")
     Optional<Azienda> findAziendaByEmail(String email);
+
+    Optional<Azienda> findAziendaByNome(String nome);
 }

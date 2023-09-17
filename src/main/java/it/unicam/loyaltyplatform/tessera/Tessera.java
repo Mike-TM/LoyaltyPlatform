@@ -11,10 +11,17 @@ import lombok.*;
 public class Tessera {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_tessera", nullable = false)
+    @Column(
+            name = "id_tessera",
+            updatable = false
+    )
     private Long idTessera;
 
-    @OneToOne @JoinColumn(name = "id_cliente", referencedColumnName = "id_cliente")
+    @OneToOne
+    @JoinColumn(
+            name = "id_cliente",
+            referencedColumnName = "id_cliente"
+    )
     private Cliente titolareTessera;
 
     public Tessera(Cliente cliente){
