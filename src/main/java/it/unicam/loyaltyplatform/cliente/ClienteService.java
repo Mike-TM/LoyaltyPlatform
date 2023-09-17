@@ -42,4 +42,18 @@ public class ClienteService {
             return cliente.get();
         }else throw new IllegalStateException("id cliente non presente");
     }
+
+    public void cancellaCliente(Cliente cliente) {
+        clienteRepository.delete(cliente);
+    }
+
+    public void modificaEmailCliente(Cliente cliente, String nuovaMail) {
+        cliente.setEmail(nuovaMail);
+        clienteRepository.save(cliente);
+    }
+
+    public void modificaNomeCliente(Cliente cliente, String nuovoNome) {
+        cliente.setNome(nuovoNome);
+        clienteRepository.save(cliente);
+    }
 }

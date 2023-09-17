@@ -22,7 +22,6 @@ public class TesseraService {
         this.clienteController=clienteController;
     }
 
-
     public List<Tessera> getTessere() {
         return tesseraRepository.findAll();
     }
@@ -40,5 +39,10 @@ public class TesseraService {
         if(tessera.isPresent()) return tessera.get();
         else throw new IllegalStateException("Id tessera non presente");
     }
+
+    public void cancellaTessera(Tessera tessera) {
+        tesseraRepository.delete(tessera);
+    }
+
 }
 

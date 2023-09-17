@@ -1,11 +1,9 @@
-/*
+
 package it.unicam.loyaltyplatform.accredito;
 
+import it.unicam.loyaltyplatform.dtos.AccreditoDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 //livello di gestione delle richieste dall'esterno
@@ -26,8 +24,10 @@ public class AccreditoController {
         return accreditoService.getAccrediti();
     }
 
-    public void registraNuovoAccredito(@RequestBody Accredito accredito){
-        accreditoService.aggiungiAccredito(accredito);
+    @PostMapping
+    public void registraNuovoAccredito(@RequestBody AccreditoDTO accreditoDto) throws Exception{
+        accreditoService.aggiungiAccredito(accreditoDto.getAziendaId(), accreditoDto.getTesseraId());
     }
+
 }
-*/
+

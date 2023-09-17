@@ -26,10 +26,24 @@ public class ClienteController {
         return clienteService.findClienteById(id);
     }
 
-
     @PostMapping
     public void registraNuovoCliente(@RequestBody Cliente cliente) {
         clienteService.addNewCliente(cliente);
+    }
+
+    @PutMapping(path = "/{email}")
+    public void modificaEmailCliente(Cliente cliente, String nuovaEmail){
+        clienteService.modificaEmailCliente(cliente,nuovaEmail);
+    }
+
+    @PutMapping(path = "/{nome}")
+    public void modificaNomeCliente(Cliente cliente, String nuovoNome){
+        clienteService.modificaNomeCliente(cliente, nuovoNome);
+    }
+
+    @DeleteMapping
+    public void cancellaCliente(Cliente cliente){
+        clienteService.cancellaCliente(cliente);
     }
 
 }

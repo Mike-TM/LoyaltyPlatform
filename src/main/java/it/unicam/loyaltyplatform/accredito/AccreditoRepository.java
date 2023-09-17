@@ -1,4 +1,4 @@
-/*
+
 package it.unicam.loyaltyplatform.accredito;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,4 +10,4 @@ public interface AccreditoRepository extends JpaRepository<Accredito,Long> {
 
    // metodi optional<> per eseguire query
 }
-*/
+

@@ -4,9 +4,7 @@ import it.unicam.loyaltyplatform.cliente.Cliente;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 
 
-public class Iscrizione {
+public class IscrizioneLivelli {
 
-    private Cliente clienteIscritto;
-    private ProgrammaFedelta programma;
 
 }

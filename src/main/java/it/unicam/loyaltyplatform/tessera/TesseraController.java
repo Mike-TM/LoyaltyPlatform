@@ -30,8 +30,13 @@ public class TesseraController {
     }
 
     @PostMapping
-    public void registraNuovaCarta(@RequestBody TesseraDTO TesseraDto) throws Exception{
+    public void registraNuovaTessera(@RequestBody TesseraDTO TesseraDto) throws Exception{
         tesseraService.aggiungiTessera(TesseraDto.getClienteId());
+    }
+
+    @DeleteMapping
+    public void cancellaTessera(Tessera tessera){
+        tesseraService.cancellaTessera(tessera);
     }
 }
 
