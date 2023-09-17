@@ -1,17 +1,29 @@
-/*
 package it.unicam.loyaltyplatform.accredito;
 
 import java.util.Date;
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.tessera.Tessera;
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
+
+@Entity @Table
+@NoArgsConstructor(force = true)
 public class Accredito {
 
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private final Tessera tessera;
-    private final Azienda azienda;
-    private final Date data;
 
+    @ManyToOne
+    @JoinColumn(name = "id_tessera", nullable = false, updatable = false)
+    private final Tessera tessera;
+
+    @ManyToOne
+    @JoinColumn(name = "id_azienda", nullable = false, updatable = false)
+    private final Azienda azienda;
+
+    @Column(name = "data", nullable = false)
+    private final Date data;
 
     public Accredito(Long id, Tessera tessera, Azienda azienda, Date data) {
         this.id=id;
@@ -42,5 +54,3 @@ public class Accredito {
         return id;
     }
 }
-
-*/
