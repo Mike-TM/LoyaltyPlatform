@@ -21,6 +21,13 @@ public class AziendaService {
     }
 
     @GetMapping
+    public Azienda getAziendaById(Long id) {
+        Optional<Azienda> azienda = aziendaRepository.findById(id);
+        if(azienda.isEmpty()) throw new IllegalStateException("Non esiste un'azienda con" + id + "come ID");
+        return azienda.get();
+    }
+
+    @GetMapping
     public List<Azienda> getAziende() {
         return aziendaRepository.findAll();
     }
@@ -35,14 +42,9 @@ public class AziendaService {
         aziendaRepository.save(newAzienda);
         System.out.print(newAzienda);
     }
-    @DeleteMapping
-    public void cancellaAzienda(Long id){
-        boolean exists = aziendaRepository.existsById(id);
-        if(!exists) {
-            throw new IllegalStateException(
-                    "Non esiste un'azienda con" + id + "come ID");
-        }
-        aziendaRepository.deleteById(id);
+
+    public void aggiungiProgrammaAlCatalogo(Azienda azienda, ProgrammaFedelta programmaFedelta){
+        azienda.getProgrammiFedelta().add(programmaFedelta);
     }
 
     @Transactional
@@ -57,9 +59,14 @@ public class AziendaService {
 
     }
 
-    public Azienda getAziendaById(Long id) {
-        Optional<Azienda> azienda = aziendaRepository.findById(id);
-        if(azienda.isEmpty()) throw new IllegalStateException("Non esiste un'azienda con" + id + "come ID");
-        return azienda.get();
+    @DeleteMapping
+    public void cancellaAzienda(Long id){
+        boolean exists = aziendaRepository.existsById(id);
+        if(!exists) {
+            throw new IllegalStateException(
+                    "Non esiste un'azienda con" + id + "come ID");
+        }
+        aziendaRepository.deleteById(id);
     }
+
 }

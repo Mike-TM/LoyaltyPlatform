@@ -19,11 +19,10 @@ public class ProgrammaFedelta {
     )
     private Long idProgramma;
 
-    @ManyToOne
+    @ManyToOne @JsonIgnore
     @JoinColumn(
             name = "id_azienda",
             referencedColumnName = "id_azienda",
-            nullable = false,
             updatable = false
     )
     private Azienda azienda;
@@ -50,15 +49,10 @@ public class ProgrammaFedelta {
         int clientiRegistrati = 0;
     }
 
-    public ProgrammaFedelta(Long idProgramma, Azienda azienda) {
-        this.idProgramma = idProgramma;
-        this.clientiRegistrati =  0;
-        this.azienda = azienda;
-    }
-
-    public ProgrammaFedelta(Azienda azienda) {
+    public ProgrammaFedelta(Azienda azienda, String nome) {
         this.clientiRegistrati = 0;
         this.azienda = azienda;
+        this.nome = nome;
     }
 
 }

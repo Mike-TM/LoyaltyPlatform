@@ -1,6 +1,9 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
+import it.unicam.loyaltyplatform.azienda.AziendaService;
+import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.tessera.Tessera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,10 +18,12 @@ import java.util.Optional;
 public class ProgrammaFedeltaService {
 
     private final ProgrammaFedeltaRepository programmaFedeltaRepository;
+    private final AziendaService aziendaService;
 
     @Autowired
-    public ProgrammaFedeltaService(ProgrammaFedeltaRepository programmaFedeltaRepository) {
+    public ProgrammaFedeltaService(ProgrammaFedeltaRepository programmaFedeltaRepository, AziendaService aziendaService) {
         this.programmaFedeltaRepository = programmaFedeltaRepository;
+        this.aziendaService =aziendaService;
     }
 
     @GetMapping
@@ -26,13 +31,19 @@ public class ProgrammaFedeltaService {
         return programmaFedeltaRepository.findAll();
     }
 
+    @GetMapping
+    public ProgrammaFedelta findProgrammaByID(Long id){
+        Optional<ProgrammaFedelta> programma = programmaFedeltaRepository.findById(id);
+        if(programma.isPresent()) return programma.get();
+        else throw new IllegalStateException("Id programma non presente");
+    }
+
     @PostMapping
-    public void registraProgrammaFedelta(ProgrammaFedelta newProgrammaFedelta){
-        Optional<ProgrammaFedelta> programmaFedeltaOptional = programmaFedeltaRepository
-                .findProgrammaFedeltaByAziendaAndNome(newProgrammaFedelta.getAzienda(), newProgrammaFedelta.getNome());
-        if(programmaFedeltaOptional.isPresent()) {
-            throw new IllegalStateException("Email già registrata");
-        }
+    public void registraProgrammaFedelta(Long azienda_id, String nome){
+
+        Azienda azienda = aziendaService.getAziendaById(azienda_id);
+        ProgrammaFedelta newProgrammaFedelta = new ProgrammaFedelta(azienda, nome);
+        aziendaService.aggiungiProgrammaAlCatalogo(azienda, newProgrammaFedelta);
         programmaFedeltaRepository.save(newProgrammaFedelta);
         System.out.print(newProgrammaFedelta);
     }

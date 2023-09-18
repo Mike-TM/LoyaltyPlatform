@@ -39,11 +39,10 @@ public class Azienda {
     )
     private String email;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
     private final List<ProgrammaFedelta> programmiFedelta;
 
-    @JsonIgnore
+
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
     private final List<Accredito> accrediti;
 
@@ -81,6 +80,7 @@ public class Azienda {
                 "id=" + id +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
+                ", programmiFedelta=" + programmiFedelta +
                 '}';
     }
 }
