@@ -40,8 +40,8 @@ public class TesseraService {
         else throw new IllegalStateException("Id tessera non presente");
     }
 
-    public void cancellaTessera(Tessera tessera) {
-        tesseraRepository.delete(tessera);
+    public void cancellaTessera(Long id) {
+        tesseraRepository.deleteById(id);
     }
 
 }

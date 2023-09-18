@@ -14,5 +14,4 @@ public class AccreditoDTO {
 
     private Long aziendaId;
 
-    private Date data;
 }

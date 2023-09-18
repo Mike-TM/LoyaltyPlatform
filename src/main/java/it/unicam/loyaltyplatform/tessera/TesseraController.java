@@ -34,9 +34,9 @@ public class TesseraController {
         tesseraService.aggiungiTessera(TesseraDto.getClienteId());
     }
 
-    @DeleteMapping
-    public void cancellaTessera(Tessera tessera){
-        tesseraService.cancellaTessera(tessera);
+    @DeleteMapping("{id}")
+    public void cancellaTessera(@PathVariable Long id) throws Exception{
+        tesseraService.cancellaTessera(id);
     }
 }
 

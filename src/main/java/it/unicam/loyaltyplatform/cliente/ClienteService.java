@@ -34,24 +34,21 @@ public class ClienteService {
         System.out.print(nuovoCliente);
     }
 
-    public Cliente findClienteById(long id) {
+    public Cliente getClienteById(long id) {
         Optional<Cliente> cliente = clienteRepository.findClienteByIdCliente(id);
         if(cliente.isPresent()) {
             return cliente.get();
         }else throw new IllegalStateException("id cliente non presente");
     }
 
-    public void cancellaCliente(Cliente cliente) {
-        clienteRepository.delete(cliente);
+    public void cancellaCliente(Long id) {
+        clienteRepository.deleteById(id);
     }
 
-    public void modificaEmailCliente(Cliente cliente, String nuovaMail) {
-        cliente.setEmail(nuovaMail);
-        clienteRepository.save(cliente);
+    public void modificaCliente(Long id, Cliente clienteDettagli) {
+        getClienteById(id).setEmail(clienteDettagli.getEmail());
+        getClienteById(id).setNome(clienteDettagli.getNome());
+        clienteRepository.save(getClienteById(id));
     }
 
-    public void modificaNomeCliente(Cliente cliente, String nuovoNome) {
-        cliente.setNome(nuovoNome);
-        clienteRepository.save(cliente);
-    }
 }

@@ -46,9 +46,8 @@ public class AziendaService {
     }
 
     @Transactional
-    public void modificaAzienda(Long id, String nome, String email) {
-        Azienda azienda = aziendaRepository.findById(id).orElseThrow(() -> new IllegalStateException(
-                "Non esiste un'azienda con" + id + "come ID"));
+    public void modificaAzienda(Long id, String nome, String email) throws Exception{
+        Azienda azienda = getAziendaById(id);
 
         if (nome != null &&
                 nome.length() > 0 &&
@@ -58,4 +57,9 @@ public class AziendaService {
 
     }
 
+    public Azienda getAziendaById(Long id) {
+        Optional<Azienda> azienda = aziendaRepository.findById(id);
+        if(azienda.isEmpty()) throw new IllegalStateException("Non esiste un'azienda con" + id + "come ID");
+        return azienda.get();
+    }
 }

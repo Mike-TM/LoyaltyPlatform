@@ -1,13 +1,12 @@
 package it.unicam.loyaltyplatform.cliente;
 
-import it.unicam.loyaltyplatform.accredito.Accredito;
+
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Getter
 @Entity(name = "Cliente")

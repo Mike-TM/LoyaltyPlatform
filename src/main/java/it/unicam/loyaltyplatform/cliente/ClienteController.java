@@ -23,7 +23,7 @@ public class ClienteController {
 
     @GetMapping(path = "/{id}")
     public Cliente getClienteById(@PathVariable long id) throws Exception {
-        return clienteService.findClienteById(id);
+        return clienteService.getClienteById(id);
     }
 
     @PostMapping
@@ -31,19 +31,14 @@ public class ClienteController {
         clienteService.addNewCliente(cliente);
     }
 
-    @PutMapping(path = "/{email}")
-    public void modificaEmailCliente(Cliente cliente, String nuovaEmail){
-        clienteService.modificaEmailCliente(cliente,nuovaEmail);
+    @PutMapping("{id}")
+    public void modificaCliente(@PathVariable Long id, @RequestBody Cliente modifiche) throws Exception{
+        clienteService.modificaCliente(id, modifiche);
     }
 
-    @PutMapping(path = "/{nome}")
-    public void modificaNomeCliente(Cliente cliente, String nuovoNome){
-        clienteService.modificaNomeCliente(cliente, nuovoNome);
-    }
-
-    @DeleteMapping
-    public void cancellaCliente(Cliente cliente){
-        clienteService.cancellaCliente(cliente);
+    @DeleteMapping("{id}")
+    public void cancellaCliente(@PathVariable Long id) throws Exception{
+        clienteService.cancellaCliente(id);
     }
 
 }

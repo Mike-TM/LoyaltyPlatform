@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class Accredito {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
+    private Long idAccredito;
 
     @ManyToOne
     @JoinColumn(
@@ -34,8 +34,8 @@ public class Accredito {
     @Column(name = "data", nullable = false)
     private final Date data;
 
-    public Accredito(Long id, Tessera tessera, Azienda azienda, Date data) {
-        this.id=id;
+    public Accredito(Long idAccredito, Tessera tessera, Azienda azienda, Date data) {
+        this.idAccredito = idAccredito;
         this.tessera=tessera;
         this.azienda=azienda;
         this.data=data;
@@ -59,7 +59,7 @@ public class Accredito {
         return tessera;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdAccredito() {
+        return idAccredito;
     }
 }

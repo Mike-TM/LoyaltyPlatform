@@ -21,6 +21,11 @@ public class AziendaController {
     public List<Azienda> getAziende() {
         return aziendaService.getAziende();
     }
+
+    @GetMapping(path = "/{id}")
+    public Azienda findAziendaById(@PathVariable Long id){
+        return aziendaService.getAziendaById(id);
+    }
     @PostMapping
     public void registraAzienda(@RequestBody Azienda azienda){
         aziendaService.registraAzienda(azienda);
@@ -35,7 +40,7 @@ public class AziendaController {
     public void modificaAzienda(
             @PathVariable("id_azienda") Long id,
             @RequestParam(required = false) String nome,
-            @RequestParam(required = false) String email) {
+            @RequestParam(required = false) String email) throws Exception{
         aziendaService.modificaAzienda(id, nome, email);
     }
 
