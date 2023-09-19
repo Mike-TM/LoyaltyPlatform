@@ -1,10 +1,6 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
-import it.unicam.loyaltyplatform.azienda.Azienda;
-import it.unicam.loyaltyplatform.azienda.AziendaRepository;
-import it.unicam.loyaltyplatform.azienda.AziendaService;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
-import it.unicam.loyaltyplatform.tessera.Tessera;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +18,7 @@ public class ProgrammaFedeltaController {
     }
 
     @GetMapping
-    public List<ProgrammaFedelta> getProgrammaFedelta() {
+    public List<ProgrammaFedelta> getAllProgrammiFedelta() {
         return programmaFedeltaService.getProgrammaFedelta();
     }
 

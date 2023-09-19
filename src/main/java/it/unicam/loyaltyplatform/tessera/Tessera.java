@@ -1,12 +1,15 @@
 package it.unicam.loyaltyplatform.tessera;
 
 import it.unicam.loyaltyplatform.cliente.Cliente;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter @Setter
+import java.util.ArrayList;
+import java.util.List;
+
+@Getter
 @ToString
-@AllArgsConstructor @NoArgsConstructor
 @Entity @Table(name = "tessera")
 public class Tessera {
 
@@ -24,8 +27,16 @@ public class Tessera {
     )
     private Cliente titolareTessera;
 
+    @OneToMany(mappedBy = "tessera", cascade = CascadeType.ALL)
+    private final List<Iscrizione> iscrizioni;
+
+    public Tessera() {
+        this.iscrizioni = new ArrayList<>();
+    }
+
     public Tessera(Cliente cliente){
         this.titolareTessera=cliente;
+        this.iscrizioni = new ArrayList<>();
     }
 
 }

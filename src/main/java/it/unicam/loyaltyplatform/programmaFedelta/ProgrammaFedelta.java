@@ -2,10 +2,12 @@ package it.unicam.loyaltyplatform.programmaFedelta;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.azienda.Azienda;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.persistence.*;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -27,7 +29,9 @@ public class ProgrammaFedelta {
     )
     private Azienda azienda;
 
-    @JsonIgnore
+    @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
+    private List<Iscrizione> iscrizioni;
+
     @OneToMany(mappedBy = "programmaFedelta")
     private List<Premio> catalogoPremi;
 
@@ -45,12 +49,25 @@ public class ProgrammaFedelta {
     )
     private int clientiRegistrati;
 
+
+    /**
+     * Costruttore di default
+     */
     public ProgrammaFedelta() {
         int clientiRegistrati = 0;
+        iscrizioni = new ArrayList<>();
+        catalogoPremi = new ArrayList<>();
     }
 
+    /**
+     * Costruttore senza id, il quale verrà generato dal DB
+     * @param azienda
+     * @param nome
+     */
     public ProgrammaFedelta(Azienda azienda, String nome) {
-        this.clientiRegistrati = 0;
+        int clientiRegistrati = 0;
+        iscrizioni = new ArrayList<>();
+        catalogoPremi = new ArrayList<>();
         this.azienda = azienda;
         this.nome = nome;
     }

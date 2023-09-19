@@ -21,7 +21,7 @@ public class AziendaService {
     }
 
     @GetMapping
-    public Azienda getAziendaById(Long id) {
+    public Azienda findAziendaById(Long id) {
         Optional<Azienda> azienda = aziendaRepository.findById(id);
         if(azienda.isEmpty()) throw new IllegalStateException("Non esiste un'azienda con" + id + "come ID");
         return azienda.get();
@@ -49,7 +49,7 @@ public class AziendaService {
 
     @Transactional
     public void modificaAzienda(Long id, String nome, String email) throws Exception{
-        Azienda azienda = getAziendaById(id);
+        Azienda azienda = aziendaRepository.getById(id);
 
         if (nome != null &&
                 nome.length() > 0 &&

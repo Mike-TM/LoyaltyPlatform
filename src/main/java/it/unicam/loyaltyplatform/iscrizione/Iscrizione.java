@@ -1,7 +1,9 @@
 package it.unicam.loyaltyplatform.iscrizione;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.cliente.Cliente;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
+import it.unicam.loyaltyplatform.tessera.Tessera;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -15,23 +17,25 @@ public class Iscrizione {
             name = "id_iscrizione",
             updatable = false
     )
-    private Long id;
+    private Long iscrizioneId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
-            name = "id_cliente",
+            name = "id_tessera",
             nullable = false,
             updatable = false
     )
-    private Cliente cliente;
+    private Tessera tessera;
 
+    @JsonIgnore
     @ManyToOne()
     @JoinColumn(
             name = "id_programma",
             nullable = false,
             updatable = false
     )
-    private ProgrammaFedelta programmaFedelta;
+    private ProgrammaFedelta programma;
 
     /**
      * Costruttore di default
@@ -39,8 +43,8 @@ public class Iscrizione {
     public Iscrizione() {
     }
 
-    public Iscrizione(Cliente cliente, ProgrammaFedelta programmaFedelta) {
-        this.cliente = cliente;
-        this.programmaFedelta = programmaFedelta;
+    public Iscrizione(ProgrammaFedelta programma, Tessera tessera) {
+        this.tessera = tessera;
+        this.programma = programma;
     }
 }

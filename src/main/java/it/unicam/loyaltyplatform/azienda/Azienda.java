@@ -23,7 +23,7 @@ public class Azienda {
             name = "id_azienda",
             updatable = false
     )
-    private Long id;
+    private Long AziendaId;
 
     @Column(
             name = "nome",
@@ -41,7 +41,6 @@ public class Azienda {
 
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
     private final List<ProgrammaFedelta> programmiFedelta;
-
 
     @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
     private final List<Accredito> accrediti;
@@ -77,10 +76,9 @@ public class Azienda {
     @Override
     public String toString() {
         return "Azienda{" +
-                "id=" + id +
+                "AziendaId=" + AziendaId +
                 ", nome='" + nome + '\'' +
                 ", email='" + email + '\'' +
-                ", programmiFedelta=" + programmiFedelta +
                 '}';
     }
 }

@@ -18,22 +18,18 @@ public class AziendaController {
     }
 
     @GetMapping
-    public List<Azienda> getAziende() {
+    public List<Azienda> getAllAziende() {
         return aziendaService.getAziende();
     }
 
-    @GetMapping(path = "/{id}")
-    public Azienda findAziendaById(@PathVariable Long id){
-        return aziendaService.getAziendaById(id);
+    @GetMapping(path = "/{id_azienda}")
+    public Azienda findAziendaById(@PathVariable Long id) {
+        return aziendaService.findAziendaById(id);
     }
+
     @PostMapping
     public void registraAzienda(@RequestBody Azienda azienda){
         aziendaService.registraAzienda(azienda);
-    }
-
-    @DeleteMapping(path = "{id_azienda}")
-    public void cancellaAzienda(@PathVariable("id_azienda") Long id){
-        aziendaService.cancellaAzienda(id);
     }
 
     @PutMapping(path = "{id_azienda}")
@@ -42,6 +38,11 @@ public class AziendaController {
             @RequestParam(required = false) String nome,
             @RequestParam(required = false) String email) throws Exception{
         aziendaService.modificaAzienda(id, nome, email);
+    }
+
+    @DeleteMapping(path = "{id_azienda}")
+    public void cancellaAzienda(@PathVariable("id_azienda") Long id){
+        aziendaService.cancellaAzienda(id);
     }
 
 }

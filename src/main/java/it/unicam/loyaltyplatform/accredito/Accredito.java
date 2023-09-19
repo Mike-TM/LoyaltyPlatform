@@ -14,6 +14,13 @@ public class Accredito {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long idAccredito;
 
+    @Column(
+            name = "data",
+            nullable = false
+
+    )
+    private final Date data;
+
     @ManyToOne
     @JoinColumn(
             name = "id_tessera",
@@ -30,9 +37,6 @@ public class Accredito {
             updatable = false
     )
     private final Azienda azienda;
-
-    @Column(name = "data", nullable = false)
-    private final Date data;
 
     public Accredito(Long idAccredito, Tessera tessera, Azienda azienda, Date data) {
         this.idAccredito = idAccredito;

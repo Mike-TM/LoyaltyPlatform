@@ -36,11 +36,7 @@ public class Cliente {
     )
     private String email;
 
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
-    private final List<Iscrizione> iscrizioni;
-
     public Cliente() {
-        iscrizioni = new ArrayList<>();
     }
 
     /**
@@ -51,7 +47,6 @@ public class Cliente {
     public Cliente(String nome, String email){
         this.nome = nome;
         this.email = email;
-        iscrizioni = new ArrayList<>();
     }
 
     public void setNome(String nome) {
