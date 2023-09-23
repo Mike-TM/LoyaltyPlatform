@@ -28,7 +28,7 @@ public class ClienteService {
     }
 
     @PostMapping
-    public ResponseEntity<Cliente> addNewCliente(Cliente nuovoCliente) throws RecordAlreadyExistsException{
+    public void addNewCliente(Cliente nuovoCliente) throws RecordAlreadyExistsException{
         Optional<Cliente> clienteByEmail = clienteRepository
                 .findClienteByEmail(nuovoCliente.getEmail());
         if(clienteByEmail.isPresent()) {
@@ -36,7 +36,6 @@ public class ClienteService {
         }
         clienteRepository.save(nuovoCliente);
         System.out.print(nuovoCliente);
-        return new ResponseEntity<>(nuovoCliente, HttpStatus.CREATED);
     }
 
     public Cliente getClienteById(long id) throws RecordNotFoundException {

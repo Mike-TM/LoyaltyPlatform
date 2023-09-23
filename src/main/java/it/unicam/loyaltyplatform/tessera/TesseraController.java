@@ -2,6 +2,7 @@
 package it.unicam.loyaltyplatform.tessera;
 import it.unicam.loyaltyplatform.dtos.TesseraDTO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,12 +30,12 @@ public class TesseraController {
         return tesseraService.findTesseraById(id);
     }
 
-    @PostMapping
+    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Tessera creata correttamente.")
     public void registraNuovaTessera(@RequestBody TesseraDTO TesseraDto) throws Exception{
         tesseraService.aggiungiTessera(TesseraDto.getClienteId());
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("{id}") @ResponseStatus(value = HttpStatus.OK, reason = "Tessera eliminata.")
     public void cancellaTessera(@PathVariable Long id) throws Exception{
         tesseraService.cancellaTessera(id);
     }

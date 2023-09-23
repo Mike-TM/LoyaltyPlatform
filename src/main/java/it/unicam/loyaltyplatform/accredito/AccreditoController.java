@@ -22,10 +22,10 @@ public class AccreditoController {
 
     }
 
-    @GetMapping(path = "/{idcliente}")
-    public List<Accredito> getAccreditiByCliente(@PathVariable Long id){
+    @GetMapping(path = "/{idtessera}")
+    public List<Accredito> getAccreditiByTessera(@PathVariable Long id){
         return getAccrediti().stream()
-                .filter(a -> a.getTessera().getTitolareTessera().getIdCliente().equals(id))
+                .filter(a -> a.getTessera().getIdTessera().equals(id))
                 .toList();
     }
 

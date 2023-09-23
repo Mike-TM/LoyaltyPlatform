@@ -6,6 +6,7 @@ import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.tessera.Tessera;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.Cascade;
 
 @Getter
 @Entity(name = "Iscrizione")
@@ -27,6 +28,7 @@ public class Iscrizione {
             updatable = false
     )
     private Tessera tessera;
+
 
     @JsonIgnore
     @ManyToOne()

@@ -2,8 +2,9 @@
 package it.unicam.loyaltyplatform.tessera;
 
 import it.unicam.loyaltyplatform.cliente.Cliente;
-import it.unicam.loyaltyplatform.cliente.ClienteController;
+import it.unicam.loyaltyplatform.cliente.ClienteService;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,24 +16,29 @@ import java.util.Optional;
 public class TesseraService {
 
     private final TesseraRepository tesseraRepository;
-    private final ClienteController clienteController;
+    private final ClienteService clienteService;
 
     @Autowired
-    public TesseraService(TesseraRepository tesseraRepository, ClienteController clienteController) {
+    public TesseraService(TesseraRepository tesseraRepository, ClienteService clienteService) {
         this.tesseraRepository = tesseraRepository;
-        this.clienteController=clienteController;
+        this.clienteService = clienteService;
     }
 
     public List<Tessera> getTessere() {
         return tesseraRepository.findAll();
     }
 
-    //esempio POST
+
     @PostMapping
     public void aggiungiTessera(Long idCliente) throws Exception{
-        Cliente cliente = clienteController.getClienteById(idCliente);
+        Cliente cliente = clienteService.getClienteById(idCliente);
         Tessera nuovaTessera = new Tessera(cliente);
         tesseraRepository.save(nuovaTessera);
+    }
+
+    public void rimuoviIscrizione(Iscrizione iscrizione){
+        iscrizione.getTessera().getIscrizioni().remove(iscrizione);
+        tesseraRepository.save(iscrizione.getTessera());
     }
 
     public Tessera findTesseraById(long id) throws RecordNotFoundException{

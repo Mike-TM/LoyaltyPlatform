@@ -34,10 +34,10 @@ public class IscrizioneService {
     }
 
     @GetMapping
-    public Iscrizione findIscrizioneByID(Long id){
+    public Iscrizione findIscrizioneByID(Long id) throws RecordNotFoundException{
         Optional<Iscrizione> iscrizione = iscrizioneRepository.findById(id);
         if(iscrizione.isPresent()) return iscrizione.get();
-        else throw new IllegalStateException("Id iscrizione non presente");
+        else throw new RecordNotFoundException();
     }
 
     @PostMapping
@@ -53,12 +53,10 @@ public class IscrizioneService {
     }
 
     @DeleteMapping
-    public void cancellaIscrizione(Long id){
-        boolean exists = iscrizioneRepository.existsById(id);
-        if(!exists) {
-            throw new IllegalStateException(
-                    "Non esiste un'iscrizione con ID " + id);
-        }
+    public void cancellaIscrizione(Long id) throws RecordNotFoundException{
+        Iscrizione iscrizioneDaCancellare = findIscrizioneByID(id);
+        programmaService.rimuoviIscrizione(iscrizioneDaCancellare);
+        tesseraService.rimuoviIscrizione(iscrizioneDaCancellare);
         iscrizioneRepository.deleteById(id);
     }
 }

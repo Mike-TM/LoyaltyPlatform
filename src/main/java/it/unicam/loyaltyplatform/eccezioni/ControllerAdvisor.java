@@ -11,11 +11,11 @@ public class ControllerAdvisor extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(RecordNotFoundException.class)
     @ResponseStatus(value = HttpStatus.NOT_FOUND, reason = "Record non trovato.")
-    public void handleClienteNotFound(RecordNotFoundException exc, WebRequest req) {
+    public void handleRecordNotFound(RecordNotFoundException exc, WebRequest req) {
     }
 
     @ExceptionHandler(RecordAlreadyExistsException.class)
     @ResponseStatus(value = HttpStatus.CONFLICT, reason = "Record Già presente.")
-    public void handleClienteAlreadyPresent(RecordAlreadyExistsException exc, WebRequest req){
+    public void handleRecordAlreadyPresent(RecordAlreadyExistsException exc, WebRequest req){
     }
 }

@@ -29,9 +29,9 @@ public class ClienteController {
         return clienteService.getClienteById(id);
     }
 
-    @PostMapping
-    public ResponseEntity<Cliente> registraNuovoCliente(@RequestBody Cliente cliente) throws RecordAlreadyExistsException {
-        return clienteService.addNewCliente(cliente);
+    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Registrazione cliente completata.")
+    public void registraNuovoCliente(@RequestBody Cliente cliente) throws RecordAlreadyExistsException {
+        clienteService.addNewCliente(cliente);
     }
 
     @PutMapping("{id}")

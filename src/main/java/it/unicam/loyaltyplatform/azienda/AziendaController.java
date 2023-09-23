@@ -2,6 +2,7 @@ package it.unicam.loyaltyplatform.azienda;
 
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,12 +28,12 @@ public class AziendaController {
         return aziendaService.findAziendaById(id);
     }
 
-    @PostMapping
+    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Nuova azienda registrata correttamente.")
     public void registraAzienda(@RequestBody Azienda azienda){
         aziendaService.registraAzienda(azienda);
     }
 
-    @PutMapping(path = "{id_azienda}")
+    @PutMapping(path = "{id_azienda}")@ResponseStatus(value = HttpStatus.OK, reason = "Dati azienda modificati correttamente.")
     public void modificaAzienda(
             @PathVariable("id_azienda") Long id,
             @RequestParam(required = false) String nome,
@@ -40,7 +41,7 @@ public class AziendaController {
         aziendaService.modificaAzienda(id, nome, email);
     }
 
-    @DeleteMapping(path = "{id_azienda}")
+    @DeleteMapping(path = "{id_azienda}")@ResponseStatus(value = HttpStatus.OK, reason = "Azienda eliminata.")
     public void cancellaAzienda(@PathVariable("id_azienda") Long id){
         aziendaService.cancellaAzienda(id);
     }

@@ -3,6 +3,7 @@ package it.unicam.loyaltyplatform.programmaFedelta;
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.azienda.AziendaService;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,6 +46,11 @@ public class ProgrammaFedeltaService {
         aziendaService.aggiungiProgrammaAlCatalogo(azienda, newProgrammaFedelta);
         programmaFedeltaRepository.save(newProgrammaFedelta);
         System.out.print(newProgrammaFedelta);
+    }
+
+    public void rimuoviIscrizione(Iscrizione iscrizione){
+        iscrizione.getProgramma().getIscrizioni().remove(iscrizione);
+        programmaFedeltaRepository.save(iscrizione.getProgramma());
     }
 
     @DeleteMapping
