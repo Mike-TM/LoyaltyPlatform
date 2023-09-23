@@ -2,6 +2,7 @@ package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.dtos.IscrizioneDTO;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class IscrizioneController {
     }
 
     @PostMapping
-    public void registraIscrizione(@RequestBody IscrizioneDTO iscrizioneDTO){
+    public void registraIscrizione(@RequestBody IscrizioneDTO iscrizioneDTO) throws RecordNotFoundException {
         iscrizioneService.registraIscrizione(
                 iscrizioneDTO.getIdProgramma(),
                 iscrizioneDTO.getIdTessera()

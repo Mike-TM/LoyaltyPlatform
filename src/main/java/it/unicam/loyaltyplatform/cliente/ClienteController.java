@@ -1,6 +1,9 @@
 package it.unicam.loyaltyplatform.cliente;
 
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -27,8 +30,8 @@ public class ClienteController {
     }
 
     @PostMapping
-    public void registraNuovoCliente(@RequestBody Cliente cliente) {
-        clienteService.addNewCliente(cliente);
+    public ResponseEntity<Cliente> registraNuovoCliente(@RequestBody Cliente cliente) throws RecordAlreadyExistsException {
+        return clienteService.addNewCliente(cliente);
     }
 
     @PutMapping("{id}")

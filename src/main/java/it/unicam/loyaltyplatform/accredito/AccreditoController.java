@@ -22,7 +22,13 @@ public class AccreditoController {
 
     }
 
-    //metodo esempio GET
+    @GetMapping(path = "/{idcliente}")
+    public List<Accredito> getAccreditiByCliente(@PathVariable Long id){
+        return getAccrediti().stream()
+                .filter(a -> a.getTessera().getIdTessera().equals(id))
+                .toList();
+    }
+
     @GetMapping
     public List<Accredito> getAccrediti(){
         return accreditoService.getAccrediti();

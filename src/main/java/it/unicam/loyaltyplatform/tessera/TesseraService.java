@@ -3,6 +3,7 @@ package it.unicam.loyaltyplatform.tessera;
 
 import it.unicam.loyaltyplatform.cliente.Cliente;
 import it.unicam.loyaltyplatform.cliente.ClienteController;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,10 +35,10 @@ public class TesseraService {
         tesseraRepository.save(nuovaTessera);
     }
 
-    public Tessera findTesseraById(long id) {
+    public Tessera findTesseraById(long id) throws RecordNotFoundException{
         Optional<Tessera> tessera = tesseraRepository.findTesseraByIdTessera(id);
         if(tessera.isPresent()) return tessera.get();
-        else throw new IllegalStateException("Id tessera non presente");
+        else throw new RecordNotFoundException();
     }
 
     public void cancellaTessera(Long id) {

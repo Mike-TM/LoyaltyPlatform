@@ -1,4 +1,4 @@
-package test.todo;
+package it.unicam.loyaltyplatform;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

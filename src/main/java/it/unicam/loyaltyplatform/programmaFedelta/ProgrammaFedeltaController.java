@@ -1,6 +1,7 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,7 +37,7 @@ public class ProgrammaFedeltaController {
     }
 
     @DeleteMapping(path = "/{id_programma}")
-    public void cancellaProgrammaFedelta(@PathVariable("id_programmaFedelta") Long id){
+    public void cancellaProgrammaFedelta(@PathVariable("id_programmaFedelta") Long id) throws RecordNotFoundException {
         programmaFedeltaService.cancellaProgrammaFedelta(id);
     }
 

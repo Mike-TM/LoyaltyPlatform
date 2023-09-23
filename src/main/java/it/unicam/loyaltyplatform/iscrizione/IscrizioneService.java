@@ -1,7 +1,6 @@
 package it.unicam.loyaltyplatform.iscrizione;
 
-import it.unicam.loyaltyplatform.azienda.Azienda;
-import it.unicam.loyaltyplatform.azienda.AziendaService;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
 import it.unicam.loyaltyplatform.tessera.Tessera;
@@ -42,7 +41,7 @@ public class IscrizioneService {
     }
 
     @PostMapping
-    public void registraIscrizione(Long programmaId, Long tesseraId){
+    public void registraIscrizione(Long programmaId, Long tesseraId) throws RecordNotFoundException {
 
         Tessera tessera = tesseraService.findTesseraById(tesseraId);
         ProgrammaFedelta programma = programmaService.findProgrammaByID(programmaId);
