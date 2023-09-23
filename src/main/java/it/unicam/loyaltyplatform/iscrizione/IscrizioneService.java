@@ -6,10 +6,9 @@ import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
 import it.unicam.loyaltyplatform.tessera.Tessera;
 import it.unicam.loyaltyplatform.tessera.TesseraService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -33,6 +32,7 @@ public class IscrizioneService {
         return iscrizioneRepository.findAll();
     }
 
+
     @GetMapping
     public Iscrizione findIscrizioneByID(Long id) throws RecordNotFoundException{
         Optional<Iscrizione> iscrizione = iscrizioneRepository.findById(id);
@@ -50,6 +50,16 @@ public class IscrizioneService {
         tessera.getIscrizioni().add(newIscrizione);
         iscrizioneRepository.save(newIscrizione);
         System.out.print(newIscrizione);
+    }
+
+    @PutMapping@ResponseStatus(value = HttpStatus.OK, reason = "Iscrizione aggiornata")
+    public void aggiornaIscrizione(Long idAzienda, Long idTessera) throws RecordNotFoundException{
+
+        iscrizioneRepository.saveAll(tesseraService.findTesseraById(idTessera).getIscrizioni().stream()
+                .filter(i -> i.getProgramma().getAzienda().getAziendaId().equals(idAzienda))
+                .toList());
+        //.forEach aggiorna progresso e poi save
+
     }
 
     @DeleteMapping
