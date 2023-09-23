@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-//livello di gestione delle richieste dall'esterno
+
 @RestController
 @RequestMapping(path = "api/accredito")
 public class AccreditoController {
@@ -25,7 +25,7 @@ public class AccreditoController {
     @GetMapping(path = "/{idcliente}")
     public List<Accredito> getAccreditiByCliente(@PathVariable Long id){
         return getAccrediti().stream()
-                .filter(a -> a.getTessera().getIdTessera().equals(id))
+                .filter(a -> a.getTessera().getTitolareTessera().getIdCliente().equals(id))
                 .toList();
     }
 
