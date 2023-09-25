@@ -3,6 +3,8 @@ package it.unicam.loyaltyplatform.accredito;
 
 
 import it.unicam.loyaltyplatform.dtos.AccreditoDTO;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
+import it.unicam.loyaltyplatform.iscrizione.IscrizioneLivelli;
 import it.unicam.loyaltyplatform.iscrizione.IscrizioneService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,8 @@ public class GestoreConvalida {
         accreditoService.aggiungiAccredito(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId());
         iscrizioneService.aggiornaIscrizione(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId());
     }
+
+
 
 
 }
