@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Entity
+@DiscriminatorValue("LIVELLI")
 public class ProgrammaLivelli extends ProgrammaFedelta {
 
     @Column(
@@ -18,6 +20,11 @@ public class ProgrammaLivelli extends ProgrammaFedelta {
 
     @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
     private List<Livello> livelli;
+
+
+    public ProgrammaLivelli() {
+        this.livelli = new ArrayList<>();
+    }
 
     public ProgrammaLivelli(Azienda azienda, String nome, double ratioExpSpesa) {
         super(azienda, nome);

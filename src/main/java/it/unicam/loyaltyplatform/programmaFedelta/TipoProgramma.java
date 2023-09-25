@@ -1,6 +1,6 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
-public enum TipiProgramma {
+public enum TipoProgramma {
     punti,
     livelli,
     cashback,
