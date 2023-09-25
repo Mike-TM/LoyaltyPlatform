@@ -9,5 +9,4 @@ import java.util.Optional;
 @Repository
 public interface ProgrammaFedeltaRepository extends JpaRepository<ProgrammaFedelta,Long> {
 
-    Optional<ProgrammaFedelta> findProgrammaFedeltaByAziendaAndNome(Azienda azienda, String email);
 }

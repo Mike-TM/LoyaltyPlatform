@@ -21,7 +21,7 @@ public class ProgrammaFedeltaController {
 
     @GetMapping
     public List<ProgrammaFedelta> getAllProgrammiFedelta() {
-        return programmaFedeltaService.getProgrammaFedelta();
+        return programmaFedeltaService.getAllProgrammiFedelta();
     }
 
     @GetMapping(path = "/{id_programma}")

@@ -6,8 +6,10 @@ import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.mapping.Map;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 @Getter
@@ -19,7 +21,7 @@ public class ProgrammaFedelta {
     @Column(
             name ="id_programma"
     )
-    private Long idProgramma;
+    private Long programmaId;
 
     @ManyToOne @JsonIgnore
     @JoinColumn(
@@ -32,7 +34,8 @@ public class ProgrammaFedelta {
     @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
     private List<Iscrizione> iscrizioni;
 
-    @OneToMany(mappedBy = "programmaFedelta")
+    @OneToMany(cascade = CascadeType.ALL)
+    @MapKey(name = "programma")
     private List<Premio> catalogoPremi;
 
     @Column(
@@ -47,14 +50,14 @@ public class ProgrammaFedelta {
             nullable = false,
             columnDefinition = "int default 0"
     )
-    private int clientiRegistrati;
+    private int numeroIscrizioni;
 
 
     /**
      * Costruttore di default
      */
     public ProgrammaFedelta() {
-        int clientiRegistrati = 0;
+        numeroIscrizioni = 0;
         iscrizioni = new ArrayList<>();
         catalogoPremi = new ArrayList<>();
     }
@@ -65,11 +68,18 @@ public class ProgrammaFedelta {
      * @param nome
      */
     public ProgrammaFedelta(Azienda azienda, String nome) {
-        int clientiRegistrati = 0;
+        numeroIscrizioni = 0;
         iscrizioni = new ArrayList<>();
         catalogoPremi = new ArrayList<>();
         this.azienda = azienda;
         this.nome = nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setNumeroIscrizioni(int numeroIscrizioni) {
+        this.numeroIscrizioni = numeroIscrizioni;
+    }
 }

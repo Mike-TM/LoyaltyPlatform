@@ -1,7 +1,6 @@
 package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.dtos.IscrizioneDTO;
-import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,13 +20,13 @@ public class IscrizioneController {
     }
 
     @GetMapping
-    public List<Iscrizione> getIscrizioni() {
+    public List<Iscrizione> getAllIscrizioni() {
         return iscrizioneService.getIscrizioni();
     }
 
     @GetMapping(path = "/tessera/{id_tessera}")
     public List<Iscrizione> getIscrizioniByIdTessera(@PathVariable long id){
-        return getIscrizioni().stream()
+        return getAllIscrizioni().stream()
                 .filter(i ->i.getTessera().getIdTessera().equals(id))
                 .toList();
     }

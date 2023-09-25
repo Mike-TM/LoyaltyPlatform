@@ -43,6 +43,7 @@ public class AziendaService {
         System.out.print(newAzienda);
     }
 
+
     public void aggiungiProgrammaAlCatalogo(Azienda azienda, ProgrammaFedelta programmaFedelta){
         azienda.getProgrammiFedelta().add(programmaFedelta);
     }
