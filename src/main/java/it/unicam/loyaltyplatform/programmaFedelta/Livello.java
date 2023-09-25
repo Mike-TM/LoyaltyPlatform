@@ -1,7 +1,11 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table
@@ -21,6 +25,5 @@ public class Livello {
     )
     private ProgrammaFedelta programma;
     private String nome;
-
 
 }

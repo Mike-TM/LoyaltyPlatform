@@ -5,5 +5,5 @@ public enum TipoProgramma {
     livelli,
     cashback,
     vip,
-    coalizione
+    coalizione;
 }

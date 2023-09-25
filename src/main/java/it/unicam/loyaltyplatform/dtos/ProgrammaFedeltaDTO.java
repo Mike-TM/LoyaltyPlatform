@@ -1,12 +1,14 @@
 package it.unicam.loyaltyplatform.dtos;
 
-import lombok.AllArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+import it.unicam.loyaltyplatform.programmaFedelta.TipoProgramma;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Getter
-@AllArgsConstructor
+@Getter @NoArgsConstructor
 public class ProgrammaFedeltaDTO {
-
-    private Long aziendaId;
-    private String nome;
+    TipoProgramma tipo;
+    Long aziendaId;
+    String nome;
 }

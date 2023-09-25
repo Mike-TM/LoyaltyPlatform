@@ -13,9 +13,11 @@ import java.util.HashMap;
 import java.util.List;
 
 @Getter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_programma")
 @Entity(name = "ProgrammaFedelta")
 @Table(name = "programma_fedelta")
-public class ProgrammaFedelta {
+public abstract class ProgrammaFedelta {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(
@@ -79,7 +81,7 @@ public class ProgrammaFedelta {
         this.nome = nome;
     }
 
-    public void setNumeroIscrizioni(int numeroIscrizioni) {
-        this.numeroIscrizioni = numeroIscrizioni;
+    public void setNumeroIscrizioni() {
+        this.numeroIscrizioni = iscrizioni.size();
     }
 }

@@ -9,14 +9,14 @@ import java.util.List;
 
 @Getter
 @Entity
-@DiscriminatorValue("LIVELLI")
+@DiscriminatorValue("livelli")
 public class ProgrammaLivelli extends ProgrammaFedelta {
 
     @Column(
-            name = "ratio_Exp/Spesa",
+            name = "ratio_Exp/Euro",
             nullable = false
     )
-    private double ratioExpSpesa;
+    private Integer ratioExpEuro;
 
     @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
     private List<Livello> livelli;
@@ -26,13 +26,13 @@ public class ProgrammaLivelli extends ProgrammaFedelta {
         this.livelli = new ArrayList<>();
     }
 
-    public ProgrammaLivelli(Azienda azienda, String nome, double ratioExpSpesa) {
+    public ProgrammaLivelli(Azienda azienda, String nome) {
         super(azienda, nome);
-        this.ratioExpSpesa = ratioExpSpesa;
+        this.ratioExpEuro = 100; //valore di default
         this.livelli = new ArrayList<>();
     }
 
-    public void setRatioExpSpesa(double ratioExpSpesa) {
-        this.ratioExpSpesa = ratioExpSpesa;
+    public void setRatioExpEuro(Integer ratioExpEuro) {
+        this.ratioExpEuro = ratioExpEuro;
     }
 }
