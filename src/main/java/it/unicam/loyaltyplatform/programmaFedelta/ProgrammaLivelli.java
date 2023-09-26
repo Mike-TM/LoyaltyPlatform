@@ -32,6 +32,7 @@ public class ProgrammaLivelli extends ProgrammaFedelta {
         this.livelli = new ArrayList<>();
     }
 
+
     public void setRatioExpEuro(Integer ratioExpEuro) {
         this.ratioExpEuro = ratioExpEuro;
     }

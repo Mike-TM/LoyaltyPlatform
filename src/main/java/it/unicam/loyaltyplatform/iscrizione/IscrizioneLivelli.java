@@ -18,7 +18,7 @@ import java.util.List;
 @Table(name = "iscrizionelivelli")
 public class IscrizioneLivelli extends Iscrizione{
 
-    @Column
+    @Column @OneToOne
     private Livello livelloCorrente;
 
     @Column

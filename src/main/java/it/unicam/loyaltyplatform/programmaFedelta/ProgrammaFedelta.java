@@ -19,13 +19,15 @@ import java.util.List;
 @Table(name = "programma_fedelta")
 public abstract class ProgrammaFedelta {
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
-            name ="id_programma"
+            name = "id_programma"
     )
     private Long programmaId;
 
-    @ManyToOne @JsonIgnore
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(
             name = "id_azienda",
             referencedColumnName = "id_azienda",
@@ -43,29 +45,22 @@ public abstract class ProgrammaFedelta {
     )
     private String nome;
 
-    @Column(
-            name = "num_iscrizioni",
-            nullable = false,
-            columnDefinition = "int default 0"
-    )
-    private int numeroIscrizioni;
-
 
     /**
      * Costruttore di default
      */
     public ProgrammaFedelta() {
-        numeroIscrizioni = 0;
         iscrizioni = new ArrayList<>();
     }
 
     /**
      * Costruttore senza id, il quale verrà generato dal DB
+     *
      * @param azienda
      * @param nome
      */
     public ProgrammaFedelta(Azienda azienda, String nome) {
-        numeroIscrizioni = 0;
+
         iscrizioni = new ArrayList<>();
         this.azienda = azienda;
         this.nome = nome;
@@ -75,7 +70,4 @@ public abstract class ProgrammaFedelta {
         this.nome = nome;
     }
 
-    public void setNumeroIscrizioni() {
-        this.numeroIscrizioni = iscrizioni.size();
-    }
 }
