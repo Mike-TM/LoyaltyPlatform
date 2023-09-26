@@ -89,7 +89,6 @@ public class IscrizioneService {
         }
     }
 
-
     @DeleteMapping
     public void cancellaIscrizione(Long id) throws RecordNotFoundException{
         Iscrizione iscrizioneDaCancellare = findIscrizioneByID(id);
