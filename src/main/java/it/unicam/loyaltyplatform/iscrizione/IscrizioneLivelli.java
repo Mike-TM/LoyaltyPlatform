@@ -18,13 +18,13 @@ import java.util.List;
 @Table(name = "iscrizionelivelli")
 public class IscrizioneLivelli extends Iscrizione{
 
-    @Column @OneToOne
+    @OneToOne
     private Livello livelloCorrente;
 
     @Column
     private double progressoLivello;
 
-   @OneToMany(mappedBy = "iscrizionelivelli")
+   @OneToMany()
     private List<Premio> premiRiscattati;
 
    public IscrizioneLivelli(ProgrammaLivelli programmaFedelta, Tessera tessera){
