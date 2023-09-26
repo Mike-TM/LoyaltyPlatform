@@ -24,6 +24,20 @@ public class Livello {
             updatable = false
     )
     private ProgrammaFedelta programma;
+    @Column(
+            name = "nome",
+            nullable = false,
+            columnDefinition = "VARCHAR(40)"
+    )
     private String nome;
 
+    @Column(
+            name = "expLevelUp",
+            nullable = false
+    )
+    private int expLevelUp;
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @MapKey(name = "livello")
+    private List<Premio> catalogoPremi;
 }

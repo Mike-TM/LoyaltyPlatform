@@ -1,6 +1,7 @@
 package it.unicam.loyaltyplatform.premio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import it.unicam.loyaltyplatform.programmaFedelta.Livello;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -20,11 +21,11 @@ public class Premio {
 
     @ManyToOne @JsonIgnore
     @JoinColumn(
-            name = "id_programma",
-            referencedColumnName = "id_programma",
+            name = "id_livello",
+            referencedColumnName = "id_livello",
             updatable = false
     )
-    private ProgrammaFedelta programmaFedelta;
+    private Livello livello;
 
     @Column(
             name = "nome",
@@ -39,8 +40,8 @@ public class Premio {
     )
     private String descrizione;
 
-    public Premio(ProgrammaFedelta programmaFedelta, String nome, String descrizione) {
-        this.programmaFedelta = programmaFedelta;
+    public Premio(Livello livello, String nome, String descrizione) {
+        this.livello = livello;
         this.nome = nome;
         this.descrizione = descrizione;
     }
