@@ -1,6 +1,8 @@
 package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.premio.Premio;
+import it.unicam.loyaltyplatform.programmaFedelta.Livello;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class IscrizioneService {
@@ -85,8 +88,15 @@ public class IscrizioneService {
             iscrizione.setLivelloCorrente(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
                     .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1));
             iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - expNextLivello);
+            iscrizioneRepository.save(iscrizione);
             checkLevelUp(iscrizione);
         }
+    }
+
+    public List<Premio> visualizzaVantaggiProgrammaLivelli(Long idIscrizione) throws RecordNotFoundException {
+        return ((ProgrammaLivelli) findIscrizioneByID(idIscrizione).getProgramma()).getLivelli().stream()
+                .flatMap(l->l.getCatalogoPremi().stream())
+                .collect(Collectors.toList());
     }
 
     @DeleteMapping
@@ -95,5 +105,32 @@ public class IscrizioneService {
         programmaService.rimuoviIscrizione(iscrizioneDaCancellare);
         tesseraService.rimuoviIscrizione(iscrizioneDaCancellare);
         iscrizioneRepository.deleteById(id);
+    }
+
+    public List<Premio> premiRiscattabiliLivelli(Long idIscrizione) throws RecordNotFoundException {
+        IscrizioneLivelli iscrizione= (IscrizioneLivelli) findIscrizioneByID(idIscrizione);
+        List<Livello> livelliSbloccati = ((ProgrammaLivelli)iscrizione.getProgramma()).getLivelli().stream()
+                .filter(l ->((ProgrammaLivelli) iscrizione.getProgramma()).
+                        getLivelli().indexOf(l) <= ((ProgrammaLivelli) iscrizione.getProgramma()).
+                        getLivelli().indexOf(iscrizione.getLivelloCorrente()))
+                .toList();
+        return livelliSbloccati.stream()
+                .flatMap(livello -> livello.getCatalogoPremi().stream())
+                .collect(Collectors.toList());
+    }
+
+    public Premio riscattaPremio(Long idPremio, Long idIscrizione) throws RecordNotFoundException {
+        IscrizioneLivelli iscrizione = (IscrizioneLivelli) findIscrizioneByID(idIscrizione);
+        Optional<Premio>isPremioRiscattabile = premiRiscattabiliLivelli(idIscrizione).stream()
+                .filter(p -> p.getPremioId().equals(idPremio))
+                .findFirst();
+        Optional<Premio> isPremioGiaRiscattato = iscrizione.getPremiRiscattati().stream()
+                .filter(p -> p.getPremioId().equals(idPremio))
+                .findFirst();
+        if(isPremioRiscattabile.isPresent() && isPremioGiaRiscattato.isEmpty()){
+            iscrizione.getPremiRiscattati().add(isPremioRiscattabile.get());
+            iscrizioneRepository.save(iscrizione);
+            return isPremioRiscattabile.get();
+        } else throw new RecordNotFoundException();
     }
 }

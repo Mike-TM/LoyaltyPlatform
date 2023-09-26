@@ -2,11 +2,14 @@ package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.dtos.IscrizioneDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.premio.Premio;
+import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path = "api/iscrizione")
@@ -42,6 +45,21 @@ public class IscrizioneController {
                 iscrizioneDTO.getIdProgramma(),
                 iscrizioneDTO.getIdTessera()
         );
+    }
+
+    @GetMapping(path = "/vantaggi/{id_iscrizione}")
+    public List<Premio> visualizzaVantaggiProgrammaLivelli(@PathVariable Long idIscrizione) throws Exception {
+        return iscrizioneService.visualizzaVantaggiProgrammaLivelli(idIscrizione);
+    }
+
+    @PutMapping(path = "/riscattapremio/{idpremio}")
+    public Premio riscattaPremioPfLivelli(@PathVariable Long idPremio, Long idIscrizione) throws RecordNotFoundException {
+        return iscrizioneService.riscattaPremio(idPremio,idIscrizione);
+    }
+
+    @GetMapping(path = "/vantaggidisponibili/{id_iscrizione}")
+    public List<Premio> visualizzaPremiRiscattabiliLivelli(@PathVariable Long idIscrizione) throws RecordNotFoundException {
+        return iscrizioneService.premiRiscattabiliLivelli(idIscrizione);
     }
 
     @DeleteMapping(path = "/{id_iscrizione}")@ResponseStatus(value = HttpStatus.OK, reason = "Cancellazione dell'iscrizione al programma. ")
