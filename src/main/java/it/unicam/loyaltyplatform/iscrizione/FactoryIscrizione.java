@@ -17,7 +17,7 @@ public class FactoryIscrizione {
     public Iscrizione creaIscrizione(ProgrammaFedelta programmaFedelta, Tessera tessera){
 
         if(programmaFedelta instanceof ProgrammaLivelli){
-            return new IscrizioneLivelli(programmaFedelta,tessera);
+            return new IscrizioneLivelli((ProgrammaLivelli) programmaFedelta,tessera);
         }else {
             //altri tipi di iscrizione
             return null;

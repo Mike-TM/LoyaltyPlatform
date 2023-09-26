@@ -28,10 +28,9 @@ public class GestoreConvalida {
 
     @PostMapping@ResponseStatus(value = HttpStatus.OK, reason = "Convalida confermata.")
     public void convalidaAcquisto(AccreditoDTO accreditoDTO) throws Exception{
-        accreditoService.aggiungiAccredito(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId());
-        iscrizioneService.aggiornaIscrizione(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId());
+        accreditoService.aggiungiAccredito(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId(), accreditoDTO.getSommaAcquisto());
+        iscrizioneService.aggiornaIscrizione(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId(), accreditoDTO.getSommaAcquisto());
     }
-
 
 
 

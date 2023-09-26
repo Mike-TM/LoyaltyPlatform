@@ -54,25 +54,25 @@ public class IscrizioneService {
     }
 
     @PutMapping@ResponseStatus(value = HttpStatus.OK, reason = "Iscrizione aggiornata")
-    public void aggiornaIscrizione(Long idAzienda, Long idTessera) throws RecordNotFoundException{
+    public void aggiornaIscrizione(Long idAzienda, Long idTessera, double spesa) throws RecordNotFoundException{
 
         List<Iscrizione> daAggiornare = tesseraService.findTesseraById(idTessera).getIscrizioni().stream()
                 .filter(i -> i.getProgramma().getAzienda().getAziendaId().equals(idAzienda))
                 .toList();
         daAggiornare.stream().
-                forEach(i -> this.aggiungiProgresso(i));
+                forEach(i -> this.aggiungiProgresso(i,spesa));
+        iscrizioneRepository.saveAll(daAggiornare);
     }
 
-
-    public void aggiungiProgresso(Iscrizione iscrizione){
-        if(iscrizione instanceof IscrizioneLivelli) aggiungiEsperienzaLivello((IscrizioneLivelli) iscrizione);
+    public void aggiungiProgresso(Iscrizione iscrizione, double spesa){
+        if(iscrizione instanceof IscrizioneLivelli) aggiungiEsperienzaLivello((IscrizioneLivelli) iscrizione, spesa);
         //if(iscrizione instanceof altroTipoDiIscrizione) doSomething()
     }
 
-
-    private void aggiungiEsperienzaLivello(IscrizioneLivelli iscrizioneLivelli) {
+    private void aggiungiEsperienzaLivello(IscrizioneLivelli iscrizioneLivelli, double spesa) {
         //prendo costanti definite nel programma fedeltà a livelli per decidere esperienza da aggiungere e
         //controllare se salire di livello
+
     }
 
 

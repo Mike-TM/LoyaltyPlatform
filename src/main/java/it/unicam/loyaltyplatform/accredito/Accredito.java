@@ -38,17 +38,21 @@ public class Accredito {
     )
     private final Azienda azienda;
 
-    public Accredito(Long idAccredito, Tessera tessera, Azienda azienda, Date data) {
+    private final double spesaAcquisto;
+
+    public Accredito(Long idAccredito, Tessera tessera, Azienda azienda, Date data, double spesa ) {
         this.idAccredito = idAccredito;
         this.tessera=tessera;
         this.azienda=azienda;
         this.data=data;
+        this.spesaAcquisto=spesa;
     }
 
-    public Accredito( Tessera tessera, Azienda azienda, Date data) {
+    public Accredito( Tessera tessera, Azienda azienda, Date data, double spesaAcquisto) {
         this.tessera=tessera;
         this.azienda=azienda;
         this.data=data;
+        this.spesaAcquisto=spesaAcquisto;
     }
 
     public Azienda getAzienda() {

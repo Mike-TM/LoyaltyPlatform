@@ -34,11 +34,11 @@ public class AccreditoService {
 
 
     @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Accredito sul programma fedeltà avvenuto.")
-    public void aggiungiAccredito(Long idAzienda, Long idTessera) throws Exception{
+    public void aggiungiAccredito(Long idAzienda, Long idTessera, double spesa) throws Exception{
         Accredito nuovoAccredito =
                         new Accredito(tesseraController.getTesseraById(idTessera),
                         aziendaService.findAziendaById(idAzienda),
-                        new Date());
+                        new Date(),spesa);
         accreditoRepository.save(nuovoAccredito);
     }
 }

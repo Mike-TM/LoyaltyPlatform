@@ -36,7 +36,7 @@ public class AccreditoController {
 
     @PostMapping
     public void registraNuovoAccredito(@RequestBody AccreditoDTO accreditoDto) throws Exception{
-        accreditoService.aggiungiAccredito(accreditoDto.getAziendaId(), accreditoDto.getTesseraId());
+        accreditoService.aggiungiAccredito(accreditoDto.getAziendaId(), accreditoDto.getTesseraId(), accreditoDto.getSommaAcquisto());
     }
 
 }

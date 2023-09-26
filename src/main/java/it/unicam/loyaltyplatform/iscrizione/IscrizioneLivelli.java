@@ -1,7 +1,9 @@
 package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.premio.Premio;
+import it.unicam.loyaltyplatform.programmaFedelta.Livello;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
+import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
 import it.unicam.loyaltyplatform.tessera.Tessera;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -17,7 +19,7 @@ import java.util.List;
 public class IscrizioneLivelli extends Iscrizione{
 
     @Column
-    private int livelloCorrente;
+    private Livello livelloCorrente;
 
     @Column
     private double progressoLivello;
@@ -25,10 +27,10 @@ public class IscrizioneLivelli extends Iscrizione{
    @OneToMany(mappedBy = "iscrizionelivelli")
     private List<Premio> premiRiscattati;
 
-   public IscrizioneLivelli(ProgrammaFedelta programmaFedelta, Tessera tessera){
+   public IscrizioneLivelli(ProgrammaLivelli programmaFedelta, Tessera tessera){
        super(programmaFedelta,tessera);
-       this.livelloCorrente=0;
        this.progressoLivello=0.0;
        this.premiRiscattati=new ArrayList<>();
+       this.livelloCorrente=programmaFedelta.getLivelli().get(0);
    }
 }

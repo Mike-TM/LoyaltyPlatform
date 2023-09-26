@@ -14,4 +14,6 @@ public class AccreditoDTO {
 
     private Long aziendaId;
 
+    private double sommaAcquisto;
+
 }
