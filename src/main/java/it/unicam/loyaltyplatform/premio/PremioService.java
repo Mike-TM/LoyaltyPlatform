@@ -39,13 +39,13 @@ public class PremioService {
         else throw new IllegalStateException("Non esiste un premio con questo ID");
     }
 
-    @PostMapping
-    public void registraPremio(PremioDTO dto) throws RecordNotFoundException {
-        ProgrammaFedelta programma = programmaFedeltaService.findProgrammaByID(dto.getProgrammaId());
-        Premio nuovoPremio = new Premio(programma, dto.getNome(), dto.getDescrizione());
-        this.programmaFedeltaService.aggiungiPremio(programma, nuovoPremio);
-        this.premioRepository.save(nuovoPremio);
-    }
+//    @PostMapping
+//    public void registraPremio(PremioDTO dto) throws RecordNotFoundException {
+//        ProgrammaFedelta programma = programmaFedeltaService.findProgrammaByID(dto.getProgrammaId());
+//        Premio nuovoPremio = new Premio(programma, dto.getNome(), dto.getDescrizione());
+//        this.programmaFedeltaService.aggiungiPremio(programma, nuovoPremio);
+//        this.premioRepository.save(nuovoPremio);
+//    }
 
     @PutMapping
     @ResponseStatus(value = HttpStatus.OK, reason = "Premio aggiornato")

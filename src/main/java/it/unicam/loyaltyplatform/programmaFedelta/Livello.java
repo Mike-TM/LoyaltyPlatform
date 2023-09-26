@@ -3,12 +3,14 @@ package it.unicam.loyaltyplatform.programmaFedelta;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.persistence.*;
+import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table
+@Getter
+@Entity(name = "Livello")
+@Table(name = "livello")
 public class Livello {
     @Id @GeneratedValue
     @Column(
@@ -37,7 +39,16 @@ public class Livello {
     )
     private int expLevelUp;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @MapKey(name = "livello")
+    @OneToMany(mappedBy = "livello", cascade = CascadeType.ALL)
     private List<Premio> catalogoPremi;
+
+    public Livello() {
+        this.catalogoPremi = new ArrayList<>();
+    }
+    public Livello(ProgrammaFedelta programma, String nome, int expLevelUp) {
+        this.programma = programma;
+        this.nome = nome;
+        this.expLevelUp = expLevelUp;
+        this.catalogoPremi = new ArrayList<>();
+    }
 }

@@ -29,11 +29,11 @@ public class PremioController {
         return this.premioService.findPremioByID(id);
     }
 
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED, reason = "Creazione premio avvenuta correttamente.")
-    public void registraPremio(@RequestBody PremioDTO premioDTO) throws RecordNotFoundException {
-        this.premioService.registraPremio(premioDTO);
-    }
+//    @PostMapping
+//    @ResponseStatus(value = HttpStatus.CREATED, reason = "Creazione premio avvenuta correttamente.")
+//    public void registraPremio(@RequestBody PremioDTO premioDTO) throws RecordNotFoundException {
+//        this.premioService.registraPremio(premioDTO);
+//    }
 
     @DeleteMapping(path = "/{id_premio}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Premio cancellato.")
