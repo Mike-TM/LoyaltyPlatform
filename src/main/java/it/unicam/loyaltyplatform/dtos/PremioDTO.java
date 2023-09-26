@@ -4,7 +4,6 @@ import lombok.Getter;
 
 @Getter
 public class PremioDTO {
-    Long programmaId;
     String nome;
     String descrizione;
 }

@@ -2,11 +2,11 @@ package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.azienda.AziendaService;
+import it.unicam.loyaltyplatform.dtos.PremioDTO;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.premio.Premio;
-import it.unicam.loyaltyplatform.tessera.Tessera;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,7 +76,24 @@ public class ProgrammaFedeltaService {
         programmaRepository.save(iscrizione.getProgramma());
     }
 
-    public void aggiungiPremio(ProgrammaFedelta programma, Premio premio){
-        programma.getCatalogoPremi().add(premio);
+    public void aggiungiLivello(Long id, String nome, int expLevelUp){
+        ProgrammaFedelta programma = this.findProgrammaByID(id);
+        if(programma instanceof ProgrammaLivelli programmaLivelli){
+            programmaLivelli.getLivelli().add(new Livello(programma, nome, expLevelUp));
+            programmaRepository.save(programmaLivelli);
+        }
+        else System.out.print("Non a livelli, sorry");
+    }
+
+    public void aggiungiPremio(Long id, PremioDTO dto, Integer numLivello){
+        ProgrammaFedelta programma = this.findProgrammaByID(id);
+        if(programma instanceof ProgrammaLivelli programmaLivelli){
+            if(numLivello != null && programmaLivelli.getLivelli().get(numLivello) != null){
+                Livello livello = programmaLivelli.getLivelli().get(numLivello);
+                Premio premio = new Premio(livello, dto.getNome(), dto.getDescrizione());
+                livello.getCatalogoPremi().add(premio);
+                programmaRepository.save(programmaLivelli);
+            }
+        }
     }
 }

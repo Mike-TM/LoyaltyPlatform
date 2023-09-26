@@ -36,10 +36,6 @@ public abstract class ProgrammaFedelta {
     @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
     private List<Iscrizione> iscrizioni;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @MapKey(name = "programma")
-    private List<Premio> catalogoPremi;
-
     @Column(
             name = "nome",
             nullable = false,
@@ -61,7 +57,6 @@ public abstract class ProgrammaFedelta {
     public ProgrammaFedelta() {
         numeroIscrizioni = 0;
         iscrizioni = new ArrayList<>();
-        catalogoPremi = new ArrayList<>();
     }
 
     /**
@@ -72,7 +67,6 @@ public abstract class ProgrammaFedelta {
     public ProgrammaFedelta(Azienda azienda, String nome) {
         numeroIscrizioni = 0;
         iscrizioni = new ArrayList<>();
-        catalogoPremi = new ArrayList<>();
         this.azienda = azienda;
         this.nome = nome;
     }
