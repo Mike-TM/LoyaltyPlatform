@@ -6,6 +6,7 @@ import it.unicam.loyaltyplatform.dtos.PremioDTO;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
+import it.unicam.loyaltyplatform.livello.Livello;
 import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +38,10 @@ public class ProgrammaFedeltaService {
     }
 
     @GetMapping
-    public ProgrammaFedelta findProgrammaByID(Long id){
+    public ProgrammaFedelta findProgrammaByID(Long id) throws RecordNotFoundException{
         Optional<ProgrammaFedelta> programma = programmaRepository.findById(id);
         if(programma.isPresent()) return programma.get();
-        else throw new IllegalStateException("Non esiste un programma con questo ID");
+        else throw new RecordNotFoundException();
     }
 
     @PostMapping
@@ -53,22 +54,31 @@ public class ProgrammaFedeltaService {
     }
 
     @Transactional
-    public void modificaProgrammaLivelli(Long id, String nome, Integer ratioExpEuro) throws RecordNotFoundException{
-        ProgrammaLivelli programma = (ProgrammaLivelli) this.findProgrammaByID(id);
-
-        if(nome!=null && nome.length() > 0) {
+    public void modificaProgramma(Long id, String nome, Integer ratioExpEuro) throws RecordNotFoundException{
+        ProgrammaFedelta programma =this.findProgrammaByID(id);
+        //faccio qui le modifiche generali del pf
+        if(nome != null && nome.length() > 0){
             programma.setNome(nome);
-
         }
+        //chiamo metodi specifici per modificare parametri presenti solo in alcuni tipi di programma
+        if(programma instanceof ProgrammaLivelli programmaLivelli){
+            this.modificaProgrammaLivelli(programmaLivelli, ratioExpEuro);
+        }
+        //gestisco con altri if programmi di altro tipo
+        this.programmaRepository.save(programma);
+    }
 
-        if(ratioExpEuro!=null && ratioExpEuro > 0) {
+    @Transactional
+    public void modificaProgrammaLivelli(ProgrammaLivelli programma, Integer ratioExpEuro) throws RecordNotFoundException{
+        if(ratioExpEuro != null && ratioExpEuro > 0){
             programma.setRatioExpEuro(ratioExpEuro);
         }
-
     }
 
     @DeleteMapping
-    public void cancellaProgrammaFedelta(Long id){
+    public void cancellaProgrammaFedelta(Long id) throws RecordNotFoundException{
+        ProgrammaFedelta programma = this.findProgrammaByID(id);
+        this.programmaRepository.deleteById(id);
     }
 
     public void rimuoviIscrizione(Iscrizione iscrizione) {
@@ -76,24 +86,12 @@ public class ProgrammaFedeltaService {
         programmaRepository.save(iscrizione.getProgramma());
     }
 
-    public void aggiungiLivello(Long id, String nome, int expLevelUp){
-        ProgrammaFedelta programma = this.findProgrammaByID(id);
-        if(programma instanceof ProgrammaLivelli programmaLivelli){
-            programmaLivelli.getLivelli().add(new Livello(programma, nome, expLevelUp));
-            programmaRepository.save(programmaLivelli);
+    public void aggiungiLivello(ProgrammaLivelli programma, Livello livello){
+        List<Livello> livelliProgramma = programma.getLivelli();
+        if(!livelliProgramma.isEmpty()) {
+            livelliProgramma.get(livelliProgramma.size() - 1).notUltimo();
         }
-        else System.out.print("Non a livelli, sorry");
-    }
-
-    public void aggiungiPremio(Long id, PremioDTO dto, Integer numLivello){
-        ProgrammaFedelta programma = this.findProgrammaByID(id);
-        if(programma instanceof ProgrammaLivelli programmaLivelli){
-            if(numLivello != null && programmaLivelli.getLivelli().get(numLivello) != null){
-                Livello livello = programmaLivelli.getLivelli().get(numLivello);
-                Premio premio = new Premio(livello, dto.getNome(), dto.getDescrizione());
-                livello.getCatalogoPremi().add(premio);
-                programmaRepository.save(programmaLivelli);
-            }
-        }
+        programma.getLivelli().add(livello);
+        programmaRepository.save(programma);
     }
 }

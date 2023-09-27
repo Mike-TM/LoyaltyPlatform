@@ -26,8 +26,8 @@ public abstract class ProgrammaFedelta {
     )
     private Long programmaId;
 
-    @ManyToOne
     @JsonIgnore
+    @ManyToOne
     @JoinColumn(
             name = "id_azienda",
             referencedColumnName = "id_azienda",

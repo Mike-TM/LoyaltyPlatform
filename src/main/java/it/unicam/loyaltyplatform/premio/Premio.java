@@ -1,8 +1,7 @@
 package it.unicam.loyaltyplatform.premio;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import it.unicam.loyaltyplatform.programmaFedelta.Livello;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
+import it.unicam.loyaltyplatform.livello.Livello;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,8 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity(name = "Premio")
 @Table(name = "premio")
-public class Premio {
 
+public class Premio {
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(
             name ="id_premio"

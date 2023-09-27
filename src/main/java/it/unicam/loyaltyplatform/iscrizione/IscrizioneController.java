@@ -30,7 +30,7 @@ public class IscrizioneController {
     @GetMapping(path = "/tessera/{id_tessera}")
     public List<Iscrizione> getIscrizioniByIdTessera(@PathVariable long id){
         return getAllIscrizioni().stream()
-                .filter(i ->i.getTessera().getIdTessera().equals(id))
+                .filter(i ->i.getTessera().getTesseraId().equals(id))
                 .toList();
     }
 

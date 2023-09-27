@@ -4,8 +4,11 @@ import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.dtos.PremioDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 
+import it.unicam.loyaltyplatform.livello.Livello;
+import it.unicam.loyaltyplatform.livello.LivelloService;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
+import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,11 +23,13 @@ public class PremioService {
 
     private final PremioRepository premioRepository;
     private final ProgrammaFedeltaService programmaFedeltaService;
+    private final LivelloService livelloService;
 
     @Autowired
-    public PremioService(PremioRepository premioRepository, ProgrammaFedeltaService programmaFedeltaService) {
+    public PremioService(PremioRepository premioRepository, ProgrammaFedeltaService programmaFedeltaService, LivelloService livelloService) {
         this.premioRepository = premioRepository;
         this.programmaFedeltaService = programmaFedeltaService;
+        this.livelloService = livelloService;
     }
 
     @GetMapping
@@ -39,20 +44,18 @@ public class PremioService {
         else throw new IllegalStateException("Non esiste un premio con questo ID");
     }
 
-//    @PostMapping
-//    public void registraPremio(PremioDTO dto) throws RecordNotFoundException {
-//        ProgrammaFedelta programma = programmaFedeltaService.findProgrammaByID(dto.getProgrammaId());
-//        Premio nuovoPremio = new Premio(programma, dto.getNome(), dto.getDescrizione());
-//        this.programmaFedeltaService.aggiungiPremio(programma, nuovoPremio);
-//        this.premioRepository.save(nuovoPremio);
-//    }
-
-    @PutMapping
-    @ResponseStatus(value = HttpStatus.OK, reason = "Premio aggiornato")
-    public void aggiornaPremio(Long idProgramma, Long idTessera) throws RecordNotFoundException{
+    @PostMapping
+    public void aggiungiPremioLivello(PremioDTO dto) throws RecordNotFoundException{
+        ProgrammaFedelta programma = this.programmaFedeltaService.findProgrammaByID(dto.getProgrammId());
+        if(programma instanceof ProgrammaLivelli programmaLivelli){
+            if(programmaLivelli.getLivelli().size() >= dto.getNumLivello() + 1) {
+                Livello livello = programmaLivelli.getLivelli().get(dto.getNumLivello());
+                Premio premio = new Premio(livello, dto.getNome(), dto.getDescrizione());
+                this.livelloService.aggiungiPremio(livello, premio);
+            }
+        }
     }
 
-    @DeleteMapping
-    public void cancellaPremio(Long id) throws RecordNotFoundException{
-    }
+
+
 }

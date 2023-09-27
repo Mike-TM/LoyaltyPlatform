@@ -2,7 +2,8 @@
 package it.unicam.loyaltyplatform.accredito;
 
 import it.unicam.loyaltyplatform.azienda.AziendaService;
-import it.unicam.loyaltyplatform.tessera.TesseraController;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.tessera.TesseraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -12,20 +13,19 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.Date;
 import java.util.List;
 
-//livello di business logic
 @Service
 public class AccreditoService {
 
     private final AccreditoRepository accreditoRepository;
     private final AziendaService aziendaService;
-    private final TesseraController tesseraController;
+    private final TesseraService tesseraService;
 
 
     @Autowired
-    public AccreditoService(AccreditoRepository accreditoRepository, AziendaService aziendaService, TesseraController tesseraController) {
+    public AccreditoService(AccreditoRepository accreditoRepository, AziendaService aziendaService, TesseraService tesseraService) {
         this.accreditoRepository = accreditoRepository;
-        this.aziendaService=aziendaService;
-        this.tesseraController=tesseraController;
+        this.aziendaService = aziendaService;
+        this.tesseraService = tesseraService;
     }
 
     public List<Accredito> getAccrediti() {
@@ -33,11 +33,12 @@ public class AccreditoService {
     }
 
 
-    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Accredito sul programma fedeltà avvenuto.")
-    public void aggiungiAccredito(Long idAzienda, Long idTessera, double spesa) throws Exception{
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Accredito sul programma fedeltà avvenuto.")
+    public void aggiungiAccredito(Long aziendaId, Long tesseraId, double spesa) throws RecordNotFoundException {
         Accredito nuovoAccredito =
-                        new Accredito(tesseraController.getTesseraById(idTessera),
-                        aziendaService.findAziendaById(idAzienda),
+                        new Accredito(tesseraService.findTesseraById(tesseraId),
+                        aziendaService.findAziendaById(aziendaId),
                         new Date(),spesa);
         accreditoRepository.save(nuovoAccredito);
     }

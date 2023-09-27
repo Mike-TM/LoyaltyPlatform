@@ -1,6 +1,7 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
+import it.unicam.loyaltyplatform.livello.Livello;
 import jakarta.persistence.*;
 import lombok.Getter;
 

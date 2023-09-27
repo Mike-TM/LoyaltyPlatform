@@ -1,6 +1,5 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
-import it.unicam.loyaltyplatform.dtos.PremioDTO;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +39,11 @@ public class ProgrammaFedeltaController {
     @PatchMapping(path = "/{programmaId}")
     @ResponseStatus(value = HttpStatus.OK,
             reason = "Parametri del programma fedeltà modificati correttamente.")
-    public void modificaProgrammaLivelli(@PathVariable("programmaId") Long id,
+    public void modificaProgramma(@PathVariable("programmaId") Long id,
                                          @RequestParam (required = false) String nome,
                                          @RequestParam (required = false) Integer ratioExpEuro)
             throws RecordNotFoundException {
-        programmaFedeltaService.modificaProgrammaLivelli(id, nome, ratioExpEuro);
+        programmaFedeltaService.modificaProgramma(id, nome, ratioExpEuro);
     }
 
     @DeleteMapping(path = "/{programmaId}")
@@ -54,23 +53,14 @@ public class ProgrammaFedeltaController {
         programmaFedeltaService.cancellaProgrammaFedelta(id);
     }
 
-    @PostMapping(path = "/{programmaId}/addLivello")
-    @ResponseStatus(value = HttpStatus.CREATED,
-            reason = "Livello creato correttamente.")
-    public void aggiungiLivello(@PathVariable("programmaId") Long id,
-                                @RequestParam String nome,
-                                @RequestParam int expLevelUp) throws Exception{
-        this.programmaFedeltaService.aggiungiLivello(id, nome, expLevelUp);
-    }
-
-    @PostMapping(path = "/{programmaId}/addPremio")
-    @ResponseStatus(value = HttpStatus.CREATED,
-            reason = "Livello creato correttamente.")
-    public void aggiungiPremio(@PathVariable("programmaId") Long id,
-                               @RequestBody PremioDTO dto,
-                               @RequestParam (required = false) Integer numLivello) throws Exception{
-
-        this.programmaFedeltaService.aggiungiPremio(id, dto, numLivello);
-    }
+//    @PostMapping(path = "/{programmaId}/addPremio")
+//    @ResponseStatus(value = HttpStatus.CREATED,
+//            reason = "Livello creato correttamente.")
+//    public void aggiungiPremio(@PathVariable("programmaId") Long id,
+//                               @RequestBody PremioDTO dto,
+//                               @RequestParam (required = false) Integer numLivello) throws Exception{
+//
+//        this.programmaFedeltaService.aggiungiPremio(id, dto, numLivello);
+//    }
 
 }

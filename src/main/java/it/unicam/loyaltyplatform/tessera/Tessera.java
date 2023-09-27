@@ -18,7 +18,7 @@ public class Tessera {
             name = "id_tessera",
             updatable = false
     )
-    private Long idTessera;
+    private Long tesseraId;
 
     @OneToOne
     @JoinColumn(

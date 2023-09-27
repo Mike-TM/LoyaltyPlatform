@@ -7,6 +7,7 @@ import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
@@ -24,6 +25,7 @@ public class TesseraService {
         this.clienteService = clienteService;
     }
 
+    @GetMapping
     public List<Tessera> getTessere() {
         return tesseraRepository.findAll();
     }
@@ -42,7 +44,7 @@ public class TesseraService {
     }
 
     public Tessera findTesseraById(long id) throws RecordNotFoundException{
-        Optional<Tessera> tessera = tesseraRepository.findTesseraByIdTessera(id);
+        Optional<Tessera> tessera = tesseraRepository.findById(id);
         if(tessera.isPresent()) return tessera.get();
         else throw new RecordNotFoundException();
     }

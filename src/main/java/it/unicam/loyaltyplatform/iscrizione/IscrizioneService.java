@@ -2,7 +2,7 @@ package it.unicam.loyaltyplatform.iscrizione;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.premio.Premio;
-import it.unicam.loyaltyplatform.programmaFedelta.Livello;
+import it.unicam.loyaltyplatform.livello.Livello;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
@@ -57,7 +57,8 @@ public class IscrizioneService {
         System.out.print(newIscrizione);
     }
 
-    @PutMapping@ResponseStatus(value = HttpStatus.OK, reason = "Iscrizione aggiornata")
+    @PutMapping
+    @ResponseStatus(value = HttpStatus.OK, reason = "Iscrizione aggiornata")
     public void aggiornaIscrizione(Long idAzienda, Long idTessera, double spesa) throws RecordNotFoundException{
 
         List<Iscrizione> daAggiornare = tesseraService.findTesseraById(idTessera).getIscrizioni().stream()
@@ -69,29 +70,46 @@ public class IscrizioneService {
     }
 
     public void aggiungiProgresso(Iscrizione iscrizione, double spesa){
-        if(iscrizione instanceof IscrizioneLivelli) aggiungiEsperienzaLivello((IscrizioneLivelli) iscrizione, spesa);
+        if(iscrizione instanceof IscrizioneLivelli iscrizioneLivelli) {
+            aggiungiEsperienzaLivello(iscrizioneLivelli, spesa);
+        }
         //if(iscrizione instanceof altroTipoDiIscrizione) doSomething()
     }
 
     private void aggiungiEsperienzaLivello(IscrizioneLivelli iscrizione,  double spesa) {
-        iscrizione.setProgressoLivello(iscrizione.getProgressoLivello()
-                +spesa*((ProgrammaLivelli)iscrizione.getProgramma()).getRatioExpEuro());
-        checkLevelUp(iscrizione);
+        if(!iscrizione.getLivelloCorrente().isUltimoLivello()) {
+            iscrizione.setProgressoLivello(iscrizione.getProgressoLivello()
+                    + spesa * ((ProgrammaLivelli) iscrizione.getProgramma()).getRatioExpEuro());
+            this.checkLevelUp(iscrizione);
+        }
     }
 
     private void checkLevelUp(IscrizioneLivelli iscrizione) {
-        int expNextLivello = ((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
-                .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1)
-                .getExpLevelUp();
 
-        if (iscrizione.getProgressoLivello() >= expNextLivello) {
+        if (iscrizione.getProgressoLivello() >= iscrizione.getLivelloCorrente().getExpLevelUp()) {
             iscrizione.setLivelloCorrente(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
                     .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1));
-            iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - expNextLivello);
+            if(!iscrizione.getLivelloCorrente().isUltimoLivello()) {
+                iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - iscrizione.getLivelloCorrente().getExpLevelUp());
+                this.checkLevelUp(iscrizione);
+            }
             iscrizioneRepository.save(iscrizione);
-            checkLevelUp(iscrizione);
         }
     }
+
+//    private void checkLevelUp(IscrizioneLivelli iscrizione) {
+//        int expNextLivello = ((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
+//                .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1)
+//                .getExpLevelUp();
+//
+//        if (iscrizione.getProgressoLivello() >= expNextLivello) {
+//            iscrizione.setLivelloCorrente(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
+//                    .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1));
+//            iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - expNextLivello);
+//            iscrizioneRepository.save(iscrizione);
+//            this.checkLevelUp(iscrizione);
+//        }
+//    }
 
     public List<Premio> visualizzaVantaggiProgrammaLivelli(Long idIscrizione) throws RecordNotFoundException {
         return ((ProgrammaLivelli) findIscrizioneByID(idIscrizione).getProgramma()).getLivelli().stream()
@@ -107,8 +125,8 @@ public class IscrizioneService {
         iscrizioneRepository.deleteById(id);
     }
 
-    public List<Premio> premiRiscattabiliLivelli(Long idIscrizione) throws RecordNotFoundException {
-        IscrizioneLivelli iscrizione= (IscrizioneLivelli) findIscrizioneByID(idIscrizione);
+    public List<Premio> premiRiscattabiliLivelli(Long iscrizioneId) throws RecordNotFoundException {
+        IscrizioneLivelli iscrizione= (IscrizioneLivelli) findIscrizioneByID(iscrizioneId);
         List<Livello> livelliSbloccati = ((ProgrammaLivelli)iscrizione.getProgramma()).getLivelli().stream()
                 .filter(l ->((ProgrammaLivelli) iscrizione.getProgramma()).
                         getLivelli().indexOf(l) <= ((ProgrammaLivelli) iscrizione.getProgramma()).

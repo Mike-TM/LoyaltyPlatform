@@ -11,6 +11,8 @@ import org.hibernate.annotations.Cascade;
 @Getter
 @Entity(name = "Iscrizione")
 @Table(name = "iscrizione")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "tipo_iscrizione")
 public class Iscrizione {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -31,7 +33,7 @@ public class Iscrizione {
 
 
     @JsonIgnore
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(
             name = "id_programma",
             nullable = false,

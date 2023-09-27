@@ -29,15 +29,21 @@ public class PremioController {
         return this.premioService.findPremioByID(id);
     }
 
-//    @PostMapping
-//    @ResponseStatus(value = HttpStatus.CREATED, reason = "Creazione premio avvenuta correttamente.")
-//    public void registraPremio(@RequestBody PremioDTO premioDTO) throws RecordNotFoundException {
-//        this.premioService.registraPremio(premioDTO);
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Creazione premio avvenuta correttamente.")
+    public void aggiungiPremioLivello(@RequestBody PremioDTO premioDTO) throws RecordNotFoundException {
+        this.premioService.aggiungiPremioLivello(premioDTO);
+    }
+
+
+//    @PatchMapping(path = "/{premioId}")
+//    @ResponseStatus(value = HttpStatus.OK,
+//            reason = "Premio modificato correttamente.")
+//    public void modificaPremio(@PathVariable("premioId") Long id,
+//                                  @RequestParam (required = false) String nome,
+//                                  @RequestParam (required = false) String desc)
+//            throws RecordNotFoundException {
+//        this.premioService.modificaPremio(id, nome, desc);
 //    }
 
-    @DeleteMapping(path = "/{id_premio}")
-    @ResponseStatus(value = HttpStatus.OK, reason = "Premio cancellato.")
-    public void cancellaPremio(@PathVariable("id_premio") Long id) throws RecordNotFoundException{
-
-    }
 }

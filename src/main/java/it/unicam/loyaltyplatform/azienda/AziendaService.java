@@ -23,7 +23,7 @@ public class AziendaService {
     @GetMapping
     public Azienda findAziendaById(Long id) {
         Optional<Azienda> azienda = aziendaRepository.findById(id);
-        if(azienda.isEmpty()) throw new IllegalStateException("Non esiste un'azienda con" + id + "come ID");
+
         return azienda.get();
     }
 

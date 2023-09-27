@@ -3,6 +3,7 @@ package it.unicam.loyaltyplatform.accredito;
 
 
 import it.unicam.loyaltyplatform.dtos.AccreditoDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.iscrizione.IscrizioneLivelli;
 import it.unicam.loyaltyplatform.iscrizione.IscrizioneService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -27,11 +29,9 @@ public class GestoreConvalida {
     }
 
     @PostMapping@ResponseStatus(value = HttpStatus.OK, reason = "Convalida confermata.")
-    public void convalidaAcquisto(AccreditoDTO accreditoDTO) throws Exception{
+    public void convalidaAcquisto(@RequestBody AccreditoDTO accreditoDTO) throws RecordNotFoundException {
         accreditoService.aggiungiAccredito(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId(), accreditoDTO.getSommaAcquisto());
         iscrizioneService.aggiornaIscrizione(accreditoDTO.getAziendaId(), accreditoDTO.getTesseraId(), accreditoDTO.getSommaAcquisto());
     }
-
-
 
 }

@@ -1,7 +1,8 @@
-package it.unicam.loyaltyplatform.programmaFedelta;
+package it.unicam.loyaltyplatform.livello;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.premio.Premio;
+import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -12,7 +13,7 @@ import java.util.List;
 @Entity(name = "Livello")
 @Table(name = "livello")
 public class Livello {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(
             name = "id_livello",
             updatable = false
@@ -42,13 +43,31 @@ public class Livello {
     @OneToMany(mappedBy = "livello", cascade = CascadeType.ALL)
     private List<Premio> catalogoPremi;
 
+    private boolean ultimoLivello;
+
     public Livello() {
         this.catalogoPremi = new ArrayList<>();
+        this.ultimoLivello = true;
     }
+
     public Livello(ProgrammaFedelta programma, String nome, int expLevelUp) {
         this.programma = programma;
         this.nome = nome;
         this.expLevelUp = expLevelUp;
         this.catalogoPremi = new ArrayList<>();
+        this.ultimoLivello = true;
     }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public void setExpLevelUp(int expLevelUp) {
+        this.expLevelUp = expLevelUp;
+    }
+
+    public void notUltimo(){
+        this.ultimoLivello = false;
+    }
+
 }
