@@ -33,12 +33,12 @@ public class ProgrammaFedeltaController {
     }
 
     @GetMapping(path = "/{programmaId}")
-    public ProgrammaFedelta getProgrammaById(@PathVariable Long id) throws RecordNotFoundException {
+    public ProgrammaFedelta getProgrammaById(@PathVariable("programmaId") Long id) throws RecordNotFoundException {
         return programmaFedeltaService.findProgrammaByID(id);
     }
 
     @GetMapping(path = "/nome/{nome}")
-    public List<ProgrammaFedelta> getProgrammiByNome(@PathVariable String nome) {
+    public List<ProgrammaFedelta> getProgrammiByNome(@PathVariable("nome") String nome) {
         return programmaFedeltaService.findProgrammiByNome(nome);
     }
 

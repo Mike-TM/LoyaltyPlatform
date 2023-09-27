@@ -25,8 +25,8 @@ public class AziendaController {
         return aziendaService.getAziende();
     }
 
-    @GetMapping(path = "/{id_azienda}")
-    public Azienda findAziendaById(@PathVariable Long id) throws RecordNotFoundException{
+    @GetMapping(path = "/{aziendaId}")
+    public Azienda findAziendaById(@PathVariable("aziendaId") Long id) throws RecordNotFoundException{
         return aziendaService.findAziendaById(id);
     }
 
@@ -36,7 +36,8 @@ public class AziendaController {
         aziendaService.registraAzienda(azienda);
     }
 
-    @PutMapping(path = "{id_azienda}")@ResponseStatus(value = HttpStatus.OK, reason = "Dati azienda modificati correttamente.")
+    @PutMapping(path = "{id_azienda}")
+    @ResponseStatus(value = HttpStatus.OK, reason = "Dati azienda modificati correttamente.")
     public void modificaAzienda(
             @PathVariable("id_azienda") Long id,
             @RequestParam(required = false) String nome,
@@ -46,7 +47,7 @@ public class AziendaController {
 
     @DeleteMapping(path = "{id_azienda}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Azienda eliminata.")
-    public void cancellaAzienda(@PathVariable("id_azienda") Long id){
+    public void cancellaAzienda(@PathVariable("id_azienda") Long id) throws RecordNotFoundException {
         aziendaService.cancellaAzienda(id);
     }
 

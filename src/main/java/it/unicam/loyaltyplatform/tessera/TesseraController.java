@@ -25,7 +25,7 @@ public class TesseraController {
     }
 
     @GetMapping(path = "/{id}")
-    public Tessera getTesseraById(@PathVariable long id) throws Exception {
+    public Tessera getTesseraById(@PathVariable("id") long id) throws Exception {
         return tesseraService.findTesseraById(id);
     }
 

@@ -48,7 +48,13 @@ public class ClienteService {
     }
 
     @Transactional
-    public void modificaCliente(Long id, Cliente clienteDettagli) throws RecordNotFoundException {
+    public void modificaCliente(Long id, Cliente clienteDettagli)
+            throws RecordNotFoundException, RecordAlreadyExistsException {
+        Optional<Cliente> clienteByEmail = this.clienteRepository
+                .findClienteByEmail(clienteDettagli.getEmail());
+        if(clienteByEmail.isPresent()) {
+            throw new RecordAlreadyExistsException();
+        }
         if(!clienteDettagli.getEmail().isEmpty()){
             findClienteById(id).setEmail(clienteDettagli.getEmail());
         }

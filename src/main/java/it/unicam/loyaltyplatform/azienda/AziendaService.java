@@ -44,7 +44,6 @@ public class AziendaService {
         aziendaRepository.save(newAzienda);
     }
 
-
     public void aggiungiProgrammaAlCatalogo(Azienda azienda, ProgrammaFedelta programmaFedelta) {
         azienda.getProgrammiFedelta().add(programmaFedelta);
         aziendaRepository.save(azienda);
@@ -54,10 +53,6 @@ public class AziendaService {
     public void modificaAzienda(Long id, String nome, String email) throws RecordAlreadyExistsException{
         Azienda azienda = aziendaRepository.getById(id);
 
-        if (nome != null && nome.length() > 0) {
-            azienda.setNome(nome);
-        }
-
         if (email != null && email.length() > 0) {
             Optional<Azienda> aziendaOptional = aziendaRepository.findAziendaByEmail(email);
             if(aziendaOptional.isPresent()) {
@@ -65,14 +60,17 @@ public class AziendaService {
             } else azienda.setEmail(email);
         }
 
+        if (nome != null && nome.length() > 0) {
+            azienda.setNome(nome);
+        }
+
     }
 
     @DeleteMapping
-    public void cancellaAzienda(Long id){
+    public void cancellaAzienda(Long id) throws RecordNotFoundException{
         boolean exists = aziendaRepository.existsById(id);
         if(!exists) {
-            throw new IllegalStateException(
-                    "Non esiste un'azienda con" + id + "come ID");
+            throw new RecordNotFoundException();
         }
         aziendaRepository.deleteById(id);
     }

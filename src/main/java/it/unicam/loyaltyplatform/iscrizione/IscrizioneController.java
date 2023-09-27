@@ -39,7 +39,8 @@ public class IscrizioneController {
         return iscrizioneService.findIscrizioneByID(id);
     }
 
-    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Iscrizione al programma fedeltà avvenuta correttamente.")
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Iscrizione al programma fedeltà avvenuta correttamente.")
     public void registraIscrizione(@RequestBody IscrizioneDTO iscrizioneDTO) throws RecordNotFoundException {
         iscrizioneService.registraIscrizione(
                 iscrizioneDTO.getIdProgramma(),
@@ -54,7 +55,7 @@ public class IscrizioneController {
 
     @PutMapping(path = "/riscattapremio/{premioId}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Premio riscattato.")
-    public Premio riscattaPremioPfLivelli(@PathVariable("premioId") Long premioId, Long iscrizioneId) throws RecordNotFoundException {
+    public Premio riscattaPremioPfLivelli(@PathVariable("premioId") Long premioId, @RequestParam Long iscrizioneId) throws RecordNotFoundException {
         return iscrizioneService.riscattaPremio(premioId, iscrizioneId);
     }
 
