@@ -112,6 +112,7 @@ public class IscrizioneService {
                 .toList();
         return livelliSbloccati.stream()
                 .flatMap(livello -> livello.getCatalogoPremi().stream())
+                .filter(p -> !iscrizione.getPremiRiscattati().contains(p))
                 .collect(Collectors.toList());
     }
 
