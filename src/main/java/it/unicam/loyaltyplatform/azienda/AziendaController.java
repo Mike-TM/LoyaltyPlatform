@@ -26,7 +26,7 @@ public class AziendaController {
     }
 
     @GetMapping(path = "/{id_azienda}")
-    public Azienda findAziendaById(@PathVariable Long id) {
+    public Azienda findAziendaById(@PathVariable Long id) throws RecordNotFoundException{
         return aziendaService.findAziendaById(id);
     }
 

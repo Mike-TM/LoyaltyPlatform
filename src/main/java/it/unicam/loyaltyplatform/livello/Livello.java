@@ -3,6 +3,7 @@ package it.unicam.loyaltyplatform.livello;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.unicam.loyaltyplatform.premio.Premio;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
+import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -26,7 +27,7 @@ public class Livello {
             referencedColumnName = "id_programma",
             updatable = false
     )
-    private ProgrammaFedelta programma;
+    private ProgrammaLivelli programma;
     @Column(
             name = "nome",
             nullable = false,
@@ -50,7 +51,7 @@ public class Livello {
         this.ultimoLivello = true;
     }
 
-    public Livello(ProgrammaFedelta programma, String nome, int expLevelUp) {
+    public Livello(ProgrammaLivelli programma, String nome, int expLevelUp) {
         this.programma = programma;
         this.nome = nome;
         this.expLevelUp = expLevelUp;

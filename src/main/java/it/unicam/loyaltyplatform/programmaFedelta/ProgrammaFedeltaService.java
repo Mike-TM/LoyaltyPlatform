@@ -2,12 +2,11 @@ package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.azienda.AziendaService;
-import it.unicam.loyaltyplatform.dtos.PremioDTO;
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.livello.Livello;
-import it.unicam.loyaltyplatform.premio.Premio;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -44,20 +43,32 @@ public class ProgrammaFedeltaService {
         else throw new RecordNotFoundException();
     }
 
+    @GetMapping
+    public List<ProgrammaFedelta> findProgrammiByNome(String nome) {
+        return this.programmaRepository.findProgrammaFedeltaByNome(nome);
+    }
+
+
     @PostMapping
-    public void registraProgrammaFedelta(@RequestBody ProgrammaFedeltaDTO dto) {
+    public void registraProgrammaFedelta(@RequestBody ProgrammaFedeltaDTO dto) throws RecordNotFoundException, RecordAlreadyExistsException{
         Azienda azienda = aziendaService.findAziendaById(dto.getAziendaId());
+        for (ProgrammaFedelta p: azienda.getProgrammiFedelta()) {
+            if(p.getNome().equals(dto.getNome()))
+                throw new RecordAlreadyExistsException();
+        }
         ProgrammaFedelta nuovoProgramma = programmaFactory.crea(azienda, dto);
         aziendaService.aggiungiProgrammaAlCatalogo(azienda, nuovoProgramma);
-        programmaRepository.save(nuovoProgramma);
         System.out.print(nuovoProgramma);
     }
 
     @Transactional
-    public void modificaProgramma(Long id, String nome, Integer ratioExpEuro) throws RecordNotFoundException{
+    public void modificaProgramma(Long id, String nome, Integer ratioExpEuro) throws RecordNotFoundException, RecordAlreadyExistsException{
         ProgrammaFedelta programma =this.findProgrammaByID(id);
         //faccio qui le modifiche generali del pf
         if(nome != null && nome.length() > 0){
+            for (ProgrammaFedelta p: programma.getAzienda().getProgrammiFedelta()) {
+                if(p.getNome().equals(nome)) throw new RecordAlreadyExistsException();
+            }
             programma.setNome(nome);
         }
         //chiamo metodi specifici per modificare parametri presenti solo in alcuni tipi di programma
@@ -86,7 +97,7 @@ public class ProgrammaFedeltaService {
         programmaRepository.save(iscrizione.getProgramma());
     }
 
-    public void aggiungiLivello(ProgrammaLivelli programma, Livello livello){
+    public void aggiungiLivello(ProgrammaLivelli programma, Livello livello) throws RecordAlreadyExistsException {
         List<Livello> livelliProgramma = programma.getLivelli();
         if(!livelliProgramma.isEmpty()) {
             livelliProgramma.get(livelliProgramma.size() - 1).notUltimo();

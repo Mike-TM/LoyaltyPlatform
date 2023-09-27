@@ -1,6 +1,7 @@
 package it.unicam.loyaltyplatform.livello;
 
 import it.unicam.loyaltyplatform.dtos.LivelloDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,14 +26,14 @@ public class LivelloController {
     }
 
     @GetMapping(path = "/{livelloId}")
-    public Livello getProgrammaById(@PathVariable("livelloId") Long id) throws RecordNotFoundException {
+    public Livello getLivelloById(@PathVariable("livelloId") Long id) throws RecordNotFoundException {
         return livelloService.findLivelloByID(id);
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED,
             reason = "Livello creato correttamente.")
-    public void aggiungiLivello(@RequestBody LivelloDTO dto) throws RecordNotFoundException{
+    public void aggiungiLivello(@RequestBody LivelloDTO dto) throws RecordNotFoundException, RecordAlreadyExistsException {
         this.livelloService.aggiungiLivello(dto);
     }
 
@@ -42,7 +43,7 @@ public class LivelloController {
     public void modificaLivello(@PathVariable("livelloId") Long id,
                                 @RequestParam String nome,
                                 @RequestParam Integer expNextLevel)
-            throws RecordNotFoundException {
+            throws RecordNotFoundException, RecordAlreadyExistsException {
         this.livelloService.modificaLivello(id, nome, expNextLevel);
     }
 }

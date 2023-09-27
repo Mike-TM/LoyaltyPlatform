@@ -1,11 +1,13 @@
 package it.unicam.loyaltyplatform.programmaFedelta;
 
 import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -19,20 +21,31 @@ public class ProgrammaFedeltaController {
         this.programmaFedeltaService = programmaFedeltaService;
     }
 
+    @GetMapping(path = "/tipi")
+    public TipoProgramma[] getAllTipi(){
+        TipoProgramma[] tipi = TipoProgramma.values();
+        return tipi;
+    }
+
     @GetMapping
     public List<ProgrammaFedelta> getAllProgrammiFedelta() {
         return programmaFedeltaService.getAllProgrammiFedelta();
     }
 
     @GetMapping(path = "/{programmaId}")
-    public ProgrammaFedelta getProgrammaById(@PathVariable Long id) throws Exception {
+    public ProgrammaFedelta getProgrammaById(@PathVariable Long id) throws RecordNotFoundException {
         return programmaFedeltaService.findProgrammaByID(id);
+    }
+
+    @GetMapping(path = "/nome/{nome}")
+    public List<ProgrammaFedelta> getProgrammiByNome(@PathVariable String nome) {
+        return programmaFedeltaService.findProgrammiByNome(nome);
     }
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED,
             reason = "Programma fedeltà creato correttamente.")
-    public void registraProgrammaFedelta(@RequestBody ProgrammaFedeltaDTO dto){
+    public void registraProgrammaFedelta(@RequestBody ProgrammaFedeltaDTO dto) throws RecordNotFoundException, RecordAlreadyExistsException{
         programmaFedeltaService.registraProgrammaFedelta(dto);
     }
 
@@ -42,7 +55,7 @@ public class ProgrammaFedeltaController {
     public void modificaProgramma(@PathVariable("programmaId") Long id,
                                          @RequestParam (required = false) String nome,
                                          @RequestParam (required = false) Integer ratioExpEuro)
-            throws RecordNotFoundException {
+            throws RecordNotFoundException, RecordAlreadyExistsException {
         programmaFedeltaService.modificaProgramma(id, nome, ratioExpEuro);
     }
 
@@ -52,15 +65,5 @@ public class ProgrammaFedeltaController {
     public void cancellaProgrammaFedelta(@PathVariable("programmaId") Long id) throws RecordNotFoundException {
         programmaFedeltaService.cancellaProgrammaFedelta(id);
     }
-
-//    @PostMapping(path = "/{programmaId}/addPremio")
-//    @ResponseStatus(value = HttpStatus.CREATED,
-//            reason = "Livello creato correttamente.")
-//    public void aggiungiPremio(@PathVariable("programmaId") Long id,
-//                               @RequestBody PremioDTO dto,
-//                               @RequestParam (required = false) Integer numLivello) throws Exception{
-//
-//        this.programmaFedeltaService.aggiungiPremio(id, dto, numLivello);
-//    }
 
 }

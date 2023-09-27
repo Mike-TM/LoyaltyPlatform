@@ -1,6 +1,7 @@
 package it.unicam.loyaltyplatform.premio;
 
-import it.unicam.loyaltyplatform.dtos.PremioDTO;
+import it.unicam.loyaltyplatform.dtos.PremioLivelloDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,19 +32,8 @@ public class PremioController {
 
     @PostMapping
     @ResponseStatus(value = HttpStatus.CREATED, reason = "Creazione premio avvenuta correttamente.")
-    public void aggiungiPremioLivello(@RequestBody PremioDTO premioDTO) throws RecordNotFoundException {
+    public void aggiungiPremioLivello(@RequestBody PremioLivelloDTO premioDTO) throws RecordNotFoundException, RecordAlreadyExistsException {
         this.premioService.aggiungiPremioLivello(premioDTO);
-    }
-
-
-    @PatchMapping(path = "/{premioId}")
-    @ResponseStatus(value = HttpStatus.OK,
-            reason = "Premio modificato correttamente.")
-    public void modificaPremio(@PathVariable("premioId") Long id,
-                                  @RequestParam (required = false) String nome,
-                                  @RequestParam (required = false) String desc)
-            throws RecordNotFoundException {
-        this.premioService.modificaPremio(id, nome, desc);
     }
 
 }

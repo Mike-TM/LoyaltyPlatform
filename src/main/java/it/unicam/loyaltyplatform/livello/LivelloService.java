@@ -1,21 +1,15 @@
 package it.unicam.loyaltyplatform.livello;
 
-import it.unicam.loyaltyplatform.azienda.Azienda;
-import it.unicam.loyaltyplatform.azienda.AziendaService;
 import it.unicam.loyaltyplatform.dtos.LivelloDTO;
-import it.unicam.loyaltyplatform.dtos.PremioDTO;
-import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
-import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import it.unicam.loyaltyplatform.premio.Premio;
 import it.unicam.loyaltyplatform.programmaFedelta.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 import java.util.Optional;
@@ -46,9 +40,14 @@ public class LivelloService {
     }
 
     @PostMapping
-    public void aggiungiLivello(LivelloDTO dto) throws RecordNotFoundException{
+    public void aggiungiLivello(LivelloDTO dto) throws RecordNotFoundException, RecordAlreadyExistsException {
         ProgrammaFedelta programma = this.programmaService.findProgrammaByID(dto.getProgrammaId());
         if(programma instanceof ProgrammaLivelli programmaLivelli){
+            for (Livello l: programmaLivelli.getLivelli()) {
+                if(l.getNome().equals(dto.getNome())){
+                    throw new RecordAlreadyExistsException();
+                }
+            }
             Livello nuovoLivello = new Livello(programmaLivelli, dto.getNome(), dto.getExpNextLevel());
             this.programmaService.aggiungiLivello(programmaLivelli, nuovoLivello);
         }
@@ -57,10 +56,15 @@ public class LivelloService {
 
     @Transactional
     public void modificaLivello(Long id, String nome, Integer expNextLevel)
-            throws RecordNotFoundException {
+            throws RecordNotFoundException, RecordAlreadyExistsException {
         Livello livello = this.findLivelloByID(id);
 
         if(nome != null && nome.length() > 0){
+            for (Livello l : livello.getProgramma().getLivelli()) {
+                if (l.getNome().equals(nome)){
+                    throw new RecordAlreadyExistsException();
+                }
+            }
             livello.setNome(nome);
         }
 
@@ -70,7 +74,7 @@ public class LivelloService {
         this.livelloRepository.save(livello);
     }
 
-    public void aggiungiPremio(Livello livello, Premio premio){
+    public void aggiungiPremio(Livello livello, Premio premio) throws RecordAlreadyExistsException {
         livello.getCatalogoPremi().add(premio);
         this.livelloRepository.save(livello);
     }

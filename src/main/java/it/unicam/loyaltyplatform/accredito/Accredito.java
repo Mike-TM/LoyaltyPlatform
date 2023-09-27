@@ -16,6 +16,10 @@ import lombok.NoArgsConstructor;
 public class Accredito {
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(
+            name = "id_accredito",
+            updatable = false
+    )
     private Long idAccredito;
 
     @Column(

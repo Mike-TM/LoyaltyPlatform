@@ -5,9 +5,8 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class PremioDTO {
-    Long programmId;
-    int numLivello;
+public class PremioLivelloDTO {
+    Long livelloId;
     String nome;
     String descrizione;
 }

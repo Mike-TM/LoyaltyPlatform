@@ -23,10 +23,10 @@ public class AziendaService {
     }
 
     @GetMapping
-    public Azienda findAziendaById(Long id) {
+    public Azienda findAziendaById(Long id) throws RecordNotFoundException{
         Optional<Azienda> azienda = aziendaRepository.findById(id);
-
-        return azienda.get();
+        if(azienda.isPresent()) return azienda.get();
+        else throw new RecordNotFoundException();
     }
 
     @GetMapping
@@ -42,12 +42,12 @@ public class AziendaService {
             throw new RecordAlreadyExistsException();
         }
         aziendaRepository.save(newAzienda);
-        System.out.print(newAzienda);
     }
 
 
-    public void aggiungiProgrammaAlCatalogo(Azienda azienda, ProgrammaFedelta programmaFedelta){
+    public void aggiungiProgrammaAlCatalogo(Azienda azienda, ProgrammaFedelta programmaFedelta) {
         azienda.getProgrammiFedelta().add(programmaFedelta);
+        aziendaRepository.save(azienda);
     }
 
     @Transactional
