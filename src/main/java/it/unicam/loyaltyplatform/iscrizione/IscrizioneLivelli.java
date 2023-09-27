@@ -21,17 +21,20 @@ public class IscrizioneLivelli extends Iscrizione{
     @OneToOne
     private Livello livelloCorrente;
 
-    @Column
+    @Column(
+            name = "progressoLivello",
+            nullable = false
+    )
     private double progressoLivello;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Premio> premiRiscattati;
 
-   public IscrizioneLivelli(ProgrammaLivelli programmaFedelta, Tessera tessera){
+    public IscrizioneLivelli(ProgrammaLivelli programmaFedelta, Tessera tessera){
        super(programmaFedelta,tessera);
 
        this.progressoLivello=0.0;
        this.premiRiscattati=new ArrayList<>();
        this.livelloCorrente=programmaFedelta.getLivelli().get(0);
-   }
+    }
 }

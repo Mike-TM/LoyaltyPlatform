@@ -36,14 +36,14 @@ public class PremioController {
     }
 
 
-//    @PatchMapping(path = "/{premioId}")
-//    @ResponseStatus(value = HttpStatus.OK,
-//            reason = "Premio modificato correttamente.")
-//    public void modificaPremio(@PathVariable("premioId") Long id,
-//                                  @RequestParam (required = false) String nome,
-//                                  @RequestParam (required = false) String desc)
-//            throws RecordNotFoundException {
-//        this.premioService.modificaPremio(id, nome, desc);
-//    }
+    @PatchMapping(path = "/{premioId}")
+    @ResponseStatus(value = HttpStatus.OK,
+            reason = "Premio modificato correttamente.")
+    public void modificaPremio(@PathVariable("premioId") Long id,
+                                  @RequestParam (required = false) String nome,
+                                  @RequestParam (required = false) String desc)
+            throws RecordNotFoundException {
+        this.premioService.modificaPremio(id, nome, desc);
+    }
 
 }

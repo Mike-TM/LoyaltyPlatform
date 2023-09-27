@@ -1,5 +1,7 @@
 package it.unicam.loyaltyplatform.azienda;
 
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +30,9 @@ public class AziendaController {
         return aziendaService.findAziendaById(id);
     }
 
-    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Nuova azienda registrata correttamente.")
-    public void registraAzienda(@RequestBody Azienda azienda){
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Nuova azienda registrata correttamente.")
+    public void registraAzienda(@RequestBody Azienda azienda) throws RecordAlreadyExistsException {
         aziendaService.registraAzienda(azienda);
     }
 
@@ -41,7 +44,8 @@ public class AziendaController {
         aziendaService.modificaAzienda(id, nome, email);
     }
 
-    @DeleteMapping(path = "{id_azienda}")@ResponseStatus(value = HttpStatus.OK, reason = "Azienda eliminata.")
+    @DeleteMapping(path = "{id_azienda}")
+    @ResponseStatus(value = HttpStatus.OK, reason = "Azienda eliminata.")
     public void cancellaAzienda(@PathVariable("id_azienda") Long id){
         aziendaService.cancellaAzienda(id);
     }

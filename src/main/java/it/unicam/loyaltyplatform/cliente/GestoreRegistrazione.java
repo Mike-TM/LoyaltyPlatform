@@ -1,13 +1,12 @@
 package it.unicam.loyaltyplatform.cliente;
 
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.tessera.TesseraService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping(path = "api/registrazione")
@@ -22,9 +21,19 @@ public class GestoreRegistrazione {
         this.tesseraService=tesseraService;
     }
 
-    @PostMapping(path = "/cliente")@ResponseStatus(value = HttpStatus.CREATED, reason = "Account cliente correttamente registrato.")
-    public void registraNuovoCliente(@RequestBody Cliente cliente) throws Exception {
-        clienteService.addNewCliente(cliente);
+    @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED, reason = "Account cliente correttamente registrato.")
+    public void registraNuovoCliente(@RequestBody Cliente cliente)
+            throws RecordAlreadyExistsException,
+            RecordNotFoundException {
+        clienteService.aggiungiCliente(cliente);
         tesseraService.aggiungiTessera(cliente.getIdCliente());
+    }
+
+    @DeleteMapping(path = "{tesseraId}")
+    @ResponseStatus(value = HttpStatus.OK, reason = "Account cliente e relativa tessera cancellati.")
+    public void eliminaCliente(@PathVariable("tesseraId") Long tesseraId)
+            throws RecordNotFoundException {
+        tesseraService.cancellaTessera(tesseraId);
     }
 }

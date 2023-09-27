@@ -19,7 +19,6 @@ public class TesseraController {
         this.tesseraService = tesseraService;
     }
 
-    //esempio GET
     @GetMapping
     public List<Tessera> getTessere(){
         return tesseraService.getTessere();
@@ -30,15 +29,6 @@ public class TesseraController {
         return tesseraService.findTesseraById(id);
     }
 
-    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Tessera creata correttamente.")
-    public void registraNuovaTessera(@RequestBody TesseraDTO TesseraDto) throws Exception{
-        tesseraService.aggiungiTessera(TesseraDto.getClienteId());
-    }
-
-    @DeleteMapping("{id}") @ResponseStatus(value = HttpStatus.OK, reason = "Tessera eliminata.")
-    public void cancellaTessera(@PathVariable Long id) throws Exception{
-        tesseraService.cancellaTessera(id);
-    }
 }
 
 

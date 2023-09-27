@@ -32,8 +32,8 @@ public class TesseraService {
 
 
     @PostMapping
-    public void aggiungiTessera(Long idCliente) throws Exception{
-        Cliente cliente = clienteService.getClienteById(idCliente);
+    public void aggiungiTessera(Long clienteId) throws RecordNotFoundException{
+        Cliente cliente = clienteService.findClienteById(clienteId);
         Tessera nuovaTessera = new Tessera(cliente);
         tesseraRepository.save(nuovaTessera);
     }
@@ -49,8 +49,9 @@ public class TesseraService {
         else throw new RecordNotFoundException();
     }
 
-    public void cancellaTessera(Long id) {
-        tesseraRepository.deleteById(id);
+    public void cancellaTessera(Long id) throws RecordNotFoundException {
+        Tessera tessera = this.findTesseraById(id);
+        this.tesseraRepository.delete(tessera);
     }
 
 }

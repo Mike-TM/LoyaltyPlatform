@@ -27,15 +27,15 @@ public class IscrizioneController {
         return iscrizioneService.getIscrizioni();
     }
 
-    @GetMapping(path = "/tessera/{id_tessera}")
-    public List<Iscrizione> getIscrizioniByIdTessera(@PathVariable long id){
+    @GetMapping(path = "/tessera/{tesseraId}")
+    public List<Iscrizione> getIscrizioniByIdTessera(@PathVariable("tesseraId") long id){
         return getAllIscrizioni().stream()
                 .filter(i ->i.getTessera().getTesseraId().equals(id))
                 .toList();
     }
 
-    @GetMapping(path = "/{id_iscrizione}")
-    public Iscrizione getIscrizioneById(@PathVariable Long id) throws Exception {
+    @GetMapping(path = "/{iscrizioneId}")
+    public Iscrizione getIscrizioneById(@PathVariable("iscrizioneId") Long id) throws Exception {
         return iscrizioneService.findIscrizioneByID(id);
     }
 
@@ -47,23 +47,25 @@ public class IscrizioneController {
         );
     }
 
-    @GetMapping(path = "/vantaggi/{id_iscrizione}")
-    public List<Premio> visualizzaVantaggiProgrammaLivelli(@PathVariable Long idIscrizione) throws Exception {
-        return iscrizioneService.visualizzaVantaggiProgrammaLivelli(idIscrizione);
+    @GetMapping(path = "/vantaggi/{iscrizioneId}")
+    public List<Premio> visualizzaVantaggiProgrammaLivelli(@PathVariable("iscrizioneId") Long iscrizioneId) throws Exception {
+        return iscrizioneService.visualizzaVantaggiProgrammaLivelli(iscrizioneId);
     }
 
-    @PutMapping(path = "/riscattapremio/{idpremio}")
-    public Premio riscattaPremioPfLivelli(@PathVariable Long idPremio, Long idIscrizione) throws RecordNotFoundException {
-        return iscrizioneService.riscattaPremio(idPremio,idIscrizione);
+    @PutMapping(path = "/riscattapremio/{premioId}")
+    @ResponseStatus(value = HttpStatus.OK, reason = "Premio riscattato.")
+    public Premio riscattaPremioPfLivelli(@PathVariable("premioId") Long premioId, Long iscrizioneId) throws RecordNotFoundException {
+        return iscrizioneService.riscattaPremio(premioId, iscrizioneId);
     }
 
-    @GetMapping(path = "/vantaggidisponibili/{id_iscrizione}")
-    public List<Premio> visualizzaPremiRiscattabiliLivelli(@PathVariable Long idIscrizione) throws RecordNotFoundException {
-        return iscrizioneService.premiRiscattabiliLivelli(idIscrizione);
+    @GetMapping(path = "/vantaggidisponibili/{iscrizioneId}")
+    public List<Premio> visualizzaPremiRiscattabiliLivelli(@PathVariable("iscrizioneId") Long iscrizioneId) throws RecordNotFoundException {
+        return iscrizioneService.premiRiscattabiliLivelli(iscrizioneId);
     }
 
-    @DeleteMapping(path = "/{id_iscrizione}")@ResponseStatus(value = HttpStatus.OK, reason = "Cancellazione dell'iscrizione al programma. ")
-    public void cancellaIscrizione(@PathVariable("id_iscrizione") Long id) throws RecordNotFoundException{
+    @DeleteMapping(path = "/{iscrizioneId}")
+    @ResponseStatus(value = HttpStatus.OK, reason = "Cancellazione dell'iscrizione al programma. ")
+    public void cancellaIscrizione(@PathVariable("iscrizioneId") Long id) throws RecordNotFoundException{
         iscrizioneService.cancellaIscrizione(id);
     }
 }

@@ -2,6 +2,7 @@ package it.unicam.loyaltyplatform.cliente;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +28,16 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    @GetMapping
+    public Cliente findClienteById(long id) throws RecordNotFoundException {
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+        if(cliente.isPresent()) {
+            return cliente.get();
+        }else throw new RecordNotFoundException();
+    }
+
     @PostMapping
-    public void addNewCliente(Cliente nuovoCliente) throws RecordAlreadyExistsException{
+    public void aggiungiCliente(Cliente nuovoCliente) throws RecordAlreadyExistsException{
         Optional<Cliente> clienteByEmail = clienteRepository
                 .findClienteByEmail(nuovoCliente.getEmail());
         if(clienteByEmail.isPresent()) {
@@ -38,25 +47,15 @@ public class ClienteService {
         System.out.print(nuovoCliente);
     }
 
-    public Cliente getClienteById(long id) throws RecordNotFoundException {
-        Optional<Cliente> cliente = clienteRepository.findById(id);
-        if(cliente.isPresent()) {
-            return cliente.get();
-        }else throw new RecordNotFoundException();
-    }
-
-    public void cancellaCliente(Long id) {
-        clienteRepository.deleteById(id);
-    }
-
+    @Transactional
     public void modificaCliente(Long id, Cliente clienteDettagli) throws RecordNotFoundException {
         if(!clienteDettagli.getEmail().isEmpty()){
-            getClienteById(id).setEmail(clienteDettagli.getEmail());
+            findClienteById(id).setEmail(clienteDettagli.getEmail());
         }
         if(!clienteDettagli.getNome().isEmpty()){
-            getClienteById(id).setNome(clienteDettagli.getNome());
+            findClienteById(id).setNome(clienteDettagli.getNome());
         }
-        clienteRepository.save(getClienteById(id));
+        clienteRepository.save(findClienteById(id));
     }
 
 }

@@ -20,7 +20,7 @@ public class Tessera {
     )
     private Long tesseraId;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(
             name = "id_cliente",
             referencedColumnName = "id_cliente"
@@ -35,7 +35,7 @@ public class Tessera {
     }
 
     public Tessera(Cliente cliente){
-        this.titolareTessera=cliente;
+        this.titolareTessera = cliente;
         this.iscrizioni = new ArrayList<>();
     }
 

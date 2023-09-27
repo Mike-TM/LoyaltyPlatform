@@ -5,10 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@AllArgsConstructor
 public class TesseraDTO {
-
     private Long clienteId;
-
 }

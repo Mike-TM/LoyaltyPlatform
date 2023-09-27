@@ -1,5 +1,7 @@
 package it.unicam.loyaltyplatform.azienda;
 
+import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,11 +35,11 @@ public class AziendaService {
     }
 
     @PostMapping
-    public void registraAzienda(Azienda newAzienda){
+    public void registraAzienda(Azienda newAzienda) throws RecordAlreadyExistsException {
         Optional<Azienda> aziendaOptional = aziendaRepository
                 .findAziendaByEmail(newAzienda.getEmail());
         if(aziendaOptional.isPresent()) {
-            throw new IllegalStateException("Email già registrata");
+            throw new RecordAlreadyExistsException();
         }
         aziendaRepository.save(newAzienda);
         System.out.print(newAzienda);
@@ -49,13 +51,18 @@ public class AziendaService {
     }
 
     @Transactional
-    public void modificaAzienda(Long id, String nome, String email) throws Exception{
+    public void modificaAzienda(Long id, String nome, String email) throws RecordAlreadyExistsException{
         Azienda azienda = aziendaRepository.getById(id);
 
-        if (nome != null &&
-                nome.length() > 0 &&
-                !Objects.equals(azienda.getNome(), nome)) {
+        if (nome != null && nome.length() > 0) {
             azienda.setNome(nome);
+        }
+
+        if (email != null && email.length() > 0) {
+            Optional<Azienda> aziendaOptional = aziendaRepository.findAziendaByEmail(email);
+            if(aziendaOptional.isPresent()) {
+                throw new RecordAlreadyExistsException();
+            } else azienda.setEmail(email);
         }
 
     }

@@ -26,22 +26,12 @@ public class ClienteController {
 
     @GetMapping(path = "/{id}")
     public Cliente getClienteById(@PathVariable long id) throws Exception {
-        return clienteService.getClienteById(id);
-    }
-
-    @PostMapping@ResponseStatus(value = HttpStatus.CREATED, reason = "Registrazione cliente completata.")
-    public void registraNuovoCliente(@RequestBody Cliente cliente) throws RecordAlreadyExistsException {
-        clienteService.addNewCliente(cliente);
+        return clienteService.findClienteById(id);
     }
 
     @PutMapping("{id}")
     public void modificaCliente(@PathVariable Long id, @RequestBody Cliente modifiche) throws Exception{
         clienteService.modificaCliente(id, modifiche);
-    }
-
-    @DeleteMapping("{id}")
-    public void cancellaCliente(@PathVariable Long id) throws Exception{
-        clienteService.cancellaCliente(id);
     }
 
 }

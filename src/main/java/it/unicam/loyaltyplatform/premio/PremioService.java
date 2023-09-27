@@ -9,6 +9,7 @@ import it.unicam.loyaltyplatform.livello.LivelloService;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaService;
 import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -56,6 +57,9 @@ public class PremioService {
         }
     }
 
+    @Transactional
+    public void modificaPremio(Long id, String nome, String desc){
 
+    }
 
 }

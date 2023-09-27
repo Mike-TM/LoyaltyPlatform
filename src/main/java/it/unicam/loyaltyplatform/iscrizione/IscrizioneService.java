@@ -92,37 +92,15 @@ public class IscrizioneService {
             if(!iscrizione.getLivelloCorrente().isUltimoLivello()) {
                 iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - iscrizione.getLivelloCorrente().getExpLevelUp());
                 this.checkLevelUp(iscrizione);
-            }
+            } else iscrizione.setProgressoLivello(0);
             iscrizioneRepository.save(iscrizione);
         }
     }
-
-//    private void checkLevelUp(IscrizioneLivelli iscrizione) {
-//        int expNextLivello = ((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
-//                .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1)
-//                .getExpLevelUp();
-//
-//        if (iscrizione.getProgressoLivello() >= expNextLivello) {
-//            iscrizione.setLivelloCorrente(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli()
-//                    .get(((ProgrammaLivelli) iscrizione.getProgramma()).getLivelli().indexOf(iscrizione.getLivelloCorrente()) + 1));
-//            iscrizione.setProgressoLivello(iscrizione.getProgressoLivello() - expNextLivello);
-//            iscrizioneRepository.save(iscrizione);
-//            this.checkLevelUp(iscrizione);
-//        }
-//    }
 
     public List<Premio> visualizzaVantaggiProgrammaLivelli(Long idIscrizione) throws RecordNotFoundException {
         return ((ProgrammaLivelli) findIscrizioneByID(idIscrizione).getProgramma()).getLivelli().stream()
                 .flatMap(l->l.getCatalogoPremi().stream())
                 .collect(Collectors.toList());
-    }
-
-    @DeleteMapping
-    public void cancellaIscrizione(Long id) throws RecordNotFoundException{
-        Iscrizione iscrizioneDaCancellare = findIscrizioneByID(id);
-        programmaService.rimuoviIscrizione(iscrizioneDaCancellare);
-        tesseraService.rimuoviIscrizione(iscrizioneDaCancellare);
-        iscrizioneRepository.deleteById(id);
     }
 
     public List<Premio> premiRiscattabiliLivelli(Long iscrizioneId) throws RecordNotFoundException {
@@ -150,5 +128,13 @@ public class IscrizioneService {
             iscrizioneRepository.save(iscrizione);
             return isPremioRiscattabile.get();
         } else throw new RecordNotFoundException();
+    }
+
+    @DeleteMapping
+    public void cancellaIscrizione(Long id) throws RecordNotFoundException{
+        Iscrizione iscrizioneDaCancellare = findIscrizioneByID(id);
+        programmaService.rimuoviIscrizione(iscrizioneDaCancellare);
+        tesseraService.rimuoviIscrizione(iscrizioneDaCancellare);
+        iscrizioneRepository.deleteById(id);
     }
 }
