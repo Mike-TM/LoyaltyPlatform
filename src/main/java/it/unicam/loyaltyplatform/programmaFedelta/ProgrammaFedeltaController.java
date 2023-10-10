@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "api/programmaFedelta")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProgrammaFedeltaController {
 
     private final ProgrammaFedeltaService programmaFedeltaService;
