@@ -20,21 +20,25 @@ public class ClienteController {
         this.clienteService = clienteService;
     }
 
-    @GetMapping
+ /*   @GetMapping
     public List<Cliente> getClienti(){
         return clienteService.getClienti();
     }
+
+  */
 
     @GetMapping(path = "/{id}")
     public Cliente getClienteById(@PathVariable("id") long id) throws Exception {
         return clienteService.findClienteById(id);
     }
 
-    @PutMapping(path = "{id}")
+  /*  @PutMapping(path = "{id}")
     @ResponseStatus(value = HttpStatus.OK, reason = "Dati cliente modificati correttamente.")
     public void modificaCliente(@PathVariable("id") Long id, @RequestBody Cliente modifiche)
             throws RecordAlreadyExistsException, RecordNotFoundException {
         clienteService.modificaCliente(id, modifiche);
     }
+
+   */
 
 }

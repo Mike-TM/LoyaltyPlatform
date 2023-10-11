@@ -51,16 +51,16 @@ public class AziendaService {
 
     @Transactional
     public void modificaAzienda(Long id, String nome, String email) throws RecordAlreadyExistsException{
-        Azienda azienda = aziendaRepository.getById(id);
+        Azienda azienda = aziendaRepository.getReferenceById(id);
 
-        if (email != null && email.length() > 0) {
+        if (email != null && !email.isEmpty()) {
             Optional<Azienda> aziendaOptional = aziendaRepository.findAziendaByEmail(email);
             if(aziendaOptional.isPresent()) {
                 throw new RecordAlreadyExistsException();
             } else azienda.setEmail(email);
         }
 
-        if (nome != null && nome.length() > 0) {
+        if (nome != null && !nome.isEmpty()) {
             azienda.setNome(nome);
         }
 

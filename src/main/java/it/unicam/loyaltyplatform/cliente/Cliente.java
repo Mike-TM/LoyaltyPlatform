@@ -1,68 +1,41 @@
 package it.unicam.loyaltyplatform.cliente;
 
 
-import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
-@Getter
-@Entity(name = "Cliente")
-@Table(
-        name = "cliente",
-        uniqueConstraints = {
-                @UniqueConstraint(name = "email_unica", columnNames = "email")
-        }
-)
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Data
+@Entity
+@Table(name = "cliente")
 public class Cliente {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(
             name = "id_cliente",
             updatable = false
     )
     private Long idCliente;
 
-    @Column(
-            name = "nome",
-            columnDefinition = "VARCHAR(40)"
-    )
+    @Column(name = "nome", nullable = false)
+    @Size(max = 100)
     private String nome;
 
-    @Column(
-            name = "email",
-            columnDefinition = "TEXT"
-    )
-    private String email;
+    @Column(name = "cognome", nullable = false)
+    @Size(max = 100)
+    private String cognome;
 
-    public Cliente() {
-    }
+    @Column(nullable = false)
+    @Size(max = 100)
+    private String login;
 
-    /**
-     * Costruttore senza id, il quale verrà generato dal DB
-     * @param nome
-     * @param email
-     */
-    public Cliente(String nome, String email){
-        this.nome = nome;
-        this.email = email;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idCliente +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
+    @Column(nullable = false)
+    @Size(max = 100)
+    private String password;
 }
