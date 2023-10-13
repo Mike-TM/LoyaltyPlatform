@@ -38,4 +38,8 @@ public class Cliente {
     @Column(nullable = false)
     @Size(max = 100)
     private String password;
+
+    @Column(nullable = false)
+    @Size(max = 100)
+    private String email;
 }

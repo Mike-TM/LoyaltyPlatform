@@ -40,5 +40,9 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // https://mavenlibs.com/maven/dependency/org.projectlombok/lombok-mapstruct-binding
     implementation 'org.projectlombok:lombok-mapstruct-binding:0.2.0'
+    // https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.12.2'
+    // https://mavenlibs.com/maven/dependency/org.webjars.npm/jsonwebtoken
+    implementation group: 'org.webjars.npm', name: 'jsonwebtoken', version: '8.5.1'
 }
 

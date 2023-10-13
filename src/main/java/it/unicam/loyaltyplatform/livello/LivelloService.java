@@ -59,7 +59,7 @@ public class LivelloService {
             throws RecordNotFoundException, RecordAlreadyExistsException {
         Livello livello = this.findLivelloByID(id);
 
-        if(nome != null && nome.length() > 0){
+        if(nome != null && !nome.isEmpty()){
             for (Livello l : livello.getProgramma().getLivelli()) {
                 if (l.getNome().equals(nome)){
                     throw new RecordAlreadyExistsException();

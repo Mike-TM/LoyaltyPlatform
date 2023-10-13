@@ -1,28 +1,19 @@
 package it.unicam.loyaltyplatform.cliente;
 
-import it.unicam.loyaltyplatform.dtos.CredentialsDto;
-import it.unicam.loyaltyplatform.dtos.SignUpDto;
-import it.unicam.loyaltyplatform.dtos.UserDto;
-import it.unicam.loyaltyplatform.eccezioni.AppException;
 import it.unicam.loyaltyplatform.eccezioni.RecordAlreadyExistsException;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.nio.CharBuffer;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,11 +22,9 @@ public class ClienteService {
 
     private final ClienteRepository clienteRepository;
 
-    private final PasswordEncoder passwordEncoder;
 
-    private final ClienteMapper userMapper;
 
-    public UserDto login(CredentialsDto credentialsDto) {
+   /* public UserDto login(CredentialsDto credentialsDto) {
         Cliente user = clienteRepository.findByLogin(credentialsDto.getLogin())
                 .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
 
@@ -45,7 +34,7 @@ public class ClienteService {
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
 
-    public UserDto register(SignUpDto userDto) {
+/*    public UserDto register(SignUpDto userDto) {
         Optional<Cliente> optionalUser = clienteRepository.findByLogin(userDto.getLogin());
 
         if (optionalUser.isPresent()) {
@@ -72,12 +61,11 @@ public class ClienteService {
         public ClienteService(ClienteRepository clienteRepository) {
             this.clienteRepository = clienteRepository;
         }
-
-        @GetMapping
-        public List<Cliente> getClienti(){
-            return clienteRepository.findAll();
-        }
-    */
+*/
+@GetMapping
+public List<Cliente> getClienti(){
+    return clienteRepository.findAll();
+}
     @GetMapping
     public Cliente findClienteById(long id) throws RecordNotFoundException {
         Optional<Cliente> cliente = clienteRepository.findById(id);
@@ -85,9 +73,9 @@ public class ClienteService {
             return cliente.get();
         } else throw new RecordNotFoundException();
     }
-}
 
- /*   @PostMapping
+
+    @PostMapping
     public void aggiungiCliente(Cliente nuovoCliente) throws RecordAlreadyExistsException{
         Optional<Cliente> clienteByEmail = clienteRepository
                 .findClienteByEmail(nuovoCliente.getEmail());
@@ -117,4 +105,4 @@ public class ClienteService {
 
 }
 
- */
+
