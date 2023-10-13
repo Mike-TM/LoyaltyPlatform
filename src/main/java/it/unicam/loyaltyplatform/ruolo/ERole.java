@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.models;
+package it.unicam.loyaltyplatform.ruolo;
 
 public enum ERole {
     ROLE_USER,

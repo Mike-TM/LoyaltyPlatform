@@ -1,8 +1,8 @@
 package it.unicam.loyaltyplatform.security.services;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
-import it.unicam.loyaltyplatform.models.Cliente;
-import it.unicam.loyaltyplatform.repository.ClienteRepository;
+import it.unicam.loyaltyplatform.cliente.Cliente;
+import it.unicam.loyaltyplatform.cliente.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

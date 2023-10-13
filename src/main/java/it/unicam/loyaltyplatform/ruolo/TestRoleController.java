@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.controllers;
+package it.unicam.loyaltyplatform.ruolo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
-public class TestController {
+public class TestRoleController {
     @GetMapping("/all")
     public String allAccess() {
         return "Public Content.";

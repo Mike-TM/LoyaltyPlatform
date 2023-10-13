@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.controllers;
+package it.unicam.loyaltyplatform.cliente;
 
 import java.util.HashSet;
 import java.util.List;
@@ -6,15 +6,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
-import it.unicam.loyaltyplatform.models.ERole;
-import it.unicam.loyaltyplatform.models.Role;
-import it.unicam.loyaltyplatform.models.Cliente;
-import it.unicam.loyaltyplatform.payload.request.LoginRequest;
-import it.unicam.loyaltyplatform.payload.request.SignupRequest;
-import it.unicam.loyaltyplatform.payload.response.JwtResponse;
-import it.unicam.loyaltyplatform.payload.response.MessageResponse;
-import it.unicam.loyaltyplatform.repository.RoleRepository;
-import it.unicam.loyaltyplatform.repository.ClienteRepository;
+import it.unicam.loyaltyplatform.cliente.payload.request.LoginRequest;
+import it.unicam.loyaltyplatform.cliente.payload.request.SignupRequest;
+import it.unicam.loyaltyplatform.cliente.payload.response.JwtResponse;
+import it.unicam.loyaltyplatform.cliente.payload.response.MessageResponse;
+import it.unicam.loyaltyplatform.ruolo.ERole;
+import it.unicam.loyaltyplatform.ruolo.Role;
+import it.unicam.loyaltyplatform.ruolo.RoleRepository;
 import it.unicam.loyaltyplatform.security.jwt.JwtUtils;
 import it.unicam.loyaltyplatform.security.services.DettagliClienteImpl;
 import it.unicam.loyaltyplatform.tessera.TesseraService;
@@ -95,7 +93,6 @@ public class AuthController {
         Cliente cliente = new Cliente(signUpRequest.getUsername(),
                 signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()));
-        //tesseraService.aggiungiTessera(cliente.getId());
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -129,6 +126,7 @@ public class AuthController {
 
         cliente.setRoles(roles);
         clienteRepository.save(cliente);
+        tesseraService.aggiungiTessera(cliente.getId());
 
         return ResponseEntity.ok(new MessageResponse("Utente registrato correttamente!"));
     }

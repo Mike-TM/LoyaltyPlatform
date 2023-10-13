@@ -1,14 +1,13 @@
 
 
 package it.unicam.loyaltyplatform.tessera;
-import it.unicam.loyaltyplatform.models.Cliente;
+import it.unicam.loyaltyplatform.cliente.Cliente;
 import it.unicam.loyaltyplatform.security.services.DettagliClienteServiceImpl;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -33,7 +32,6 @@ public class TesseraService {
     }
 
 
-    @PostMapping
     public void aggiungiTessera(Long clienteId) throws RecordNotFoundException{
         Cliente cliente = clienteService.findClienteById(clienteId);
         Tessera nuovaTessera = new Tessera(cliente);

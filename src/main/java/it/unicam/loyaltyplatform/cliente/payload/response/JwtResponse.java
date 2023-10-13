@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.payload.response;
+package it.unicam.loyaltyplatform.cliente.payload.response;
 
 import java.util.List;
 

@@ -1,12 +1,9 @@
-package it.unicam.loyaltyplatform.repository;
+package it.unicam.loyaltyplatform.ruolo;
 
 import java.util.Optional;
 
-import it.unicam.loyaltyplatform.models.ERole;
-import it.unicam.loyaltyplatform.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
 
 
 @Repository
