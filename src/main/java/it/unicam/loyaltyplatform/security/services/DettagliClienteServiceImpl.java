@@ -1,7 +1,8 @@
 package it.unicam.loyaltyplatform.security.services;
 
-import it.unicam.loyaltyplatform.models.User;
-import it.unicam.loyaltyplatform.repository.UserRepository;
+import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
+import it.unicam.loyaltyplatform.models.Cliente;
+import it.unicam.loyaltyplatform.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -9,19 +10,29 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 
 @Service
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class DettagliClienteServiceImpl implements UserDetailsService {
     @Autowired
-    UserRepository userRepository;
+    ClienteRepository clienteRepository;
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByUsername(username)
+        Cliente cliente = clienteRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-        return UserDetailsImpl.build(user);
+        return DettagliClienteImpl.build(cliente);
     }
 
-}
+    public Cliente findClienteById(long id) throws RecordNotFoundException {
+        Optional<Cliente> cliente = clienteRepository.findById(id);
+        if (cliente.isPresent()) {
+            return cliente.get();
+        } else throw new RecordNotFoundException();
+    }
+
+
+    }

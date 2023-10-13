@@ -2,7 +2,7 @@ package it.unicam.loyaltyplatform.security;
 
 import it.unicam.loyaltyplatform.security.jwt.AuthEntryPointJwt;
 import it.unicam.loyaltyplatform.security.jwt.AuthTokenFilter;
-import it.unicam.loyaltyplatform.security.services.UserDetailsServiceImpl;
+import it.unicam.loyaltyplatform.security.services.DettagliClienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 public class WebSecurityConfig {
     @Autowired
-    UserDetailsServiceImpl userDetailsService;
+    DettagliClienteServiceImpl userDetailsService;
 
     @Autowired
     private AuthEntryPointJwt unauthorizedHandler;

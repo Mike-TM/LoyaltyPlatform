@@ -3,7 +3,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import it.unicam.loyaltyplatform.models.User;
+import it.unicam.loyaltyplatform.models.Cliente;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class UserDetailsImpl implements UserDetails {
+public class DettagliClienteImpl implements UserDetails {
     private static final long serialVersionUID = 1L;
 
     private Long id;
@@ -26,8 +26,8 @@ public class UserDetailsImpl implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    public UserDetailsImpl(Long id, String username, String email, String password,
-                           Collection<? extends GrantedAuthority> authorities) {
+    public DettagliClienteImpl(Long id, String username, String email, String password,
+                               Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -35,16 +35,16 @@ public class UserDetailsImpl implements UserDetails {
         this.authorities = authorities;
     }
 
-    public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream()
+    public static DettagliClienteImpl build(Cliente cliente) {
+        List<GrantedAuthority> authorities = cliente.getRoles().stream()
                 .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toList());
 
-        return new UserDetailsImpl(
-                user.getId(),
-                user.getUsername(),
-                user.getEmail(),
-                user.getPassword(),
+        return new DettagliClienteImpl(
+                cliente.getId(),
+                cliente.getUsername(),
+                cliente.getEmail(),
+                cliente.getPassword(),
                 authorities);
     }
 
@@ -97,7 +97,7 @@ public class UserDetailsImpl implements UserDetails {
             return true;
         if (o == null || getClass() != o.getClass())
             return false;
-        UserDetailsImpl user = (UserDetailsImpl) o;
+        DettagliClienteImpl user = (DettagliClienteImpl) o;
         return Objects.equals(id, user.id);
     }
 }
