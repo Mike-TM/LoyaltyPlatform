@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.security.services;
+package it.unicam.loyaltyplatform.cliente.services;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;

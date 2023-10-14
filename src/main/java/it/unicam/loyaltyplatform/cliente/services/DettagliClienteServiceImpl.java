@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.security.services;
+package it.unicam.loyaltyplatform.cliente.services;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.cliente.Cliente;

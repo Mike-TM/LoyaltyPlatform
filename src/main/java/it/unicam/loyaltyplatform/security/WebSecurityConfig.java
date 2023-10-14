@@ -2,7 +2,7 @@ package it.unicam.loyaltyplatform.security;
 
 import it.unicam.loyaltyplatform.security.jwt.AuthEntryPointJwt;
 import it.unicam.loyaltyplatform.security.jwt.AuthTokenFilter;
-import it.unicam.loyaltyplatform.security.services.DettagliClienteServiceImpl;
+import it.unicam.loyaltyplatform.cliente.services.DettagliClienteServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -70,6 +71,10 @@ public class WebSecurityConfig {
                                 .requestMatchers("/api/login").permitAll()
                                 .anyRequest().authenticated()
                 );
+
+        http.headers(
+                headersConfigurer -> headersConfigurer.contentSecurityPolicy(
+                        contentSecurityPolicyConfig -> contentSecurityPolicyConfig.policyDirectives("script-src 'self'")));
 
         http.authenticationProvider(authenticationProvider());
 

@@ -2,8 +2,7 @@
 
 package it.unicam.loyaltyplatform.tessera;
 import it.unicam.loyaltyplatform.cliente.Cliente;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
-import it.unicam.loyaltyplatform.security.services.DettagliClienteServiceImpl;
+import it.unicam.loyaltyplatform.cliente.services.DettagliClienteServiceImpl;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
 import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;

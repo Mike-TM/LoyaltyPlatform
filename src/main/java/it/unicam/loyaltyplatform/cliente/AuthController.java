@@ -14,7 +14,7 @@ import it.unicam.loyaltyplatform.ruolo.ERole;
 import it.unicam.loyaltyplatform.ruolo.Role;
 import it.unicam.loyaltyplatform.ruolo.RoleRepository;
 import it.unicam.loyaltyplatform.security.jwt.JwtUtils;
-import it.unicam.loyaltyplatform.security.services.DettagliClienteImpl;
+import it.unicam.loyaltyplatform.cliente.services.DettagliClienteImpl;
 import it.unicam.loyaltyplatform.tessera.TesseraService;
 import jakarta.validation.Valid;
 
@@ -26,7 +26,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
