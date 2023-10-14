@@ -1,9 +1,8 @@
 
 
 package it.unicam.loyaltyplatform.tessera;
-import it.unicam.loyaltyplatform.dtos.TesseraDTO;
+import it.unicam.loyaltyplatform.iscrizione.Iscrizione;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,6 +27,16 @@ public class TesseraController {
     @GetMapping(path = "/{id}")
     public Tessera getTesseraById(@PathVariable("id") long id) throws Exception {
         return tesseraService.findTesseraById(id);
+    }
+
+    @GetMapping(path = "/cliente/{clienteId}")
+    public Tessera getTesseraByClienteId(@PathVariable("clienteId") long id) throws Exception {
+        return tesseraService.findTesseraByClienteId(id);
+    }
+
+    @GetMapping(path = "/{id}/iscrizioni")
+    public List<Iscrizione> getIscrizioni(@PathVariable("id") long id) throws Exception {
+        return getTesseraById(id).getIscrizioni();
     }
 
 }

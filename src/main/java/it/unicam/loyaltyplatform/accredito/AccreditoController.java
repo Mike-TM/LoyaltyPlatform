@@ -3,10 +3,8 @@
 
 package it.unicam.loyaltyplatform.accredito;
 
-import it.unicam.loyaltyplatform.azienda.AziendaController;
 import it.unicam.loyaltyplatform.dtos.AccreditoDTO;
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
-import it.unicam.loyaltyplatform.tessera.TesseraController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
