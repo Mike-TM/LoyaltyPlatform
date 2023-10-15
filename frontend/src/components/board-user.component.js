@@ -1,39 +1,30 @@
-import React, { Component } from "react";
 
-import UserService from "../services/user.service";
 import AuthService from "../services/auth.service";
+import React from 'react';
+import UserService from '../services/user.service';
 
-export default class BoardUserComponent extends Component {
-    constructor(props) {
-        super(props);
+export default class UserComponent extends React.Component {
 
+    constructor(props){
+        super(props)
         this.state = {
-            content: "",
+            content:"",
             iscrizioni: []
-        };
+        }
     }
 
-    componentDidMount() {
-        const currentUser = AuthService.getCurrentUser();
-
-        const clienteId = currentUser.id;
-
-        UserService.getTesseraByClienteId(clienteId).then(
-            response => {
-                this.setState({
-                    tessera: response.data
-                });
-            },
-            error => {
-                console.error("Errore nel recupero della tessera:", error);
-            }
-        );
+    componentDidMount(){
+        const cliente=AuthService.getCurrentUser();
+        const idCliente=cliente.id;
+        const tessera=UserService.getTesseraByClienteId(idCliente);
+        UserService.getTesseraByClienteId(idCliente).then((response) => {
+            this.setState({ tessera: response.data})
+        });
 
     }
 
-    render() {
+    render (){
         const { tessera } = this.state;
-
         return (
             <div className="container">
                 <header className="jumbotron">
@@ -42,11 +33,26 @@ export default class BoardUserComponent extends Component {
                 {tessera && (
                     <div className="tessera">
                         <p>Numero Tessera: {tessera.tesseraId}</p>
-                        <p>Iscrizioni Tessera: {tessera.iscrizioni}</p>
-                        {/* Aggiungi altri dettagli della tessera se necessario */}
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Programma fedeltà</th>
+                                </tr>
+                            </thead>
+                        <tbody>
+                    {this.state.tessera.iscrizioni.map((subscription) => (
+                        <tr key={subscription.id}>
+                            <td>{subscription.id}</td>
+                            <td>{subscription.programma}</td>
+                        </tr>
+                        ))}
+                        </tbody>
+                        </table>
                     </div>
                 )}
             </div>
-        );
+        )
     }
 }
+//
