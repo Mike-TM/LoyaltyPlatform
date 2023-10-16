@@ -57,9 +57,8 @@ class Home extends Component {
         const currentUser = authService.getCurrentUser();
 
         if (currentUser) {
-            const tesseraId = currentUser.tessera;
 
-            axios.post(`/api/iscrizione/${1}/programma/${programmaId}`, null, { headers: authHeader() })
+            axios.post(`/api/iscrizione/${currentUser.id}/programma/${programmaId}`, null, { headers: authHeader() })
                 .then(response => {
                     // Aggiorna lo stato solo del programma che è stato iscritto
                     this.setState(prevState => ({

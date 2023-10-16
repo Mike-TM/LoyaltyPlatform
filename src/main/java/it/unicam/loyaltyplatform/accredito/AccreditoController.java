@@ -36,7 +36,7 @@ public class AccreditoController {
     }
 
     @PostMapping(path = "/convalida")
-    @ResponseStatus(value = HttpStatus.OK, reason = "Accredito registrato ed iscrizioni aggiornate.")
+    @ResponseStatus(value = HttpStatus.OK)
     public void convalidaAcquisto(@RequestBody AccreditoDTO accreditoDTO) throws RecordNotFoundException {
         accreditoService.aggiungiAccredito(accreditoDTO.getAziendaId(),
                 accreditoDTO.getTesseraId(),

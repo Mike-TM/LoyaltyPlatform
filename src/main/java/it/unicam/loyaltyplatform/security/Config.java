@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.ruolo;
+package it.unicam.loyaltyplatform.security;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.azienda.AziendaRepository;
@@ -9,6 +9,9 @@ import it.unicam.loyaltyplatform.livello.Livello;
 import it.unicam.loyaltyplatform.livello.LivelloRepository;
 import it.unicam.loyaltyplatform.livello.LivelloService;
 import it.unicam.loyaltyplatform.programmaFedelta.*;
+import it.unicam.loyaltyplatform.ruolo.ERole;
+import it.unicam.loyaltyplatform.ruolo.Role;
+import it.unicam.loyaltyplatform.ruolo.RoleRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -47,7 +50,8 @@ public class Config {
             programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Farmacia Milesi Loyalty"));
             programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Pasquale Family"));
 
-            livelloService.aggiungiLivello(new LivelloDTO(new Long(1), "Help", 30000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(1), "Principiante", 1000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(1), "Molto figo", 30000));
             livelloService.aggiungiLivello(new LivelloDTO(new Long(2), "Help", 30000));
             livelloService.aggiungiLivello(new LivelloDTO(new Long(3), "Help", 30000));
             livelloService.aggiungiLivello(new LivelloDTO(new Long(4), "Help", 30000));

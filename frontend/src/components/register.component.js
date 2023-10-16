@@ -5,6 +5,7 @@ import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
 
 import AuthService from "../services/auth.service";
+import {Navigate} from "react-router-dom";
 
 const required = value => {
     if (!value) {
@@ -121,6 +122,12 @@ export default class RegisterComponent extends Component {
     }
 
     render() {
+        const currentUser = AuthService.getCurrentUser();
+
+        if (currentUser) {
+            return <Navigate to="/profile" />;
+        }
+        
         return (
             <div className="col-md-12">
                 <div className="card card-container">

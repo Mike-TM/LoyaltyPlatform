@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route, Link } from "react-router-dom";
+import {Routes, Route, Link, Navigate} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -11,14 +11,26 @@ import Home from "./components/home.component";
 import Profile from "./components/profile.component";
 import BoardUser from "./components/listaIscrizioni.component";
 
+function LoginComponent() {
+  if (AuthService.getCurrentUser()) {
+    return <Navigate to="/profile" />;
+  }
+  return <Login />;
+}
+
+function RegisterComponent() {
+  if (AuthService.getCurrentUser()) {
+    return <Navigate to="/profile" />;
+  }
+  return <Register />;
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.logOut = this.logOut.bind(this);
 
     this.state = {
-      showModeratorBoard: false,
-      showAdminBoard: false,
       currentUser: undefined,
     };
   }
@@ -45,7 +57,7 @@ class App extends Component {
   }
 
   render() {
-    const { currentUser, showModeratorBoard, showAdminBoard } = this.state;
+    const { currentUser } = this.state;
 
     return (
         <div>

@@ -6,10 +6,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import it.unicam.loyaltyplatform.eccezioni.RecordNotFoundException;
-import it.unicam.loyaltyplatform.cliente.payload.request.LoginRequest;
-import it.unicam.loyaltyplatform.cliente.payload.request.SignupRequest;
-import it.unicam.loyaltyplatform.cliente.payload.response.JwtResponse;
-import it.unicam.loyaltyplatform.cliente.payload.response.MessageResponse;
+import it.unicam.loyaltyplatform.security.payload.request.LoginRequest;
+import it.unicam.loyaltyplatform.security.payload.request.SignupRequest;
+import it.unicam.loyaltyplatform.security.payload.response.JwtResponse;
+import it.unicam.loyaltyplatform.security.payload.response.MessageResponse;
 import it.unicam.loyaltyplatform.ruolo.ERole;
 import it.unicam.loyaltyplatform.ruolo.Role;
 import it.unicam.loyaltyplatform.ruolo.RoleRepository;

@@ -1,4 +1,4 @@
-package it.unicam.loyaltyplatform.cliente.payload.request;
+package it.unicam.loyaltyplatform.security.payload.request;
 
 import java.util.Set;
 

@@ -41,7 +41,7 @@ export default class ProfileComponent extends Component {
                             <div className="col-md-6 offset-md-3">
                                 <div className="profile-info">
                                     <p>
-                                        <strong className="profile-label">Id Utente:</strong>{" "}
+                                        <strong className="profile-label">ID Utente:</strong>{" "}
                                         {currentUser.id}
                                     </p>
                                     <p>

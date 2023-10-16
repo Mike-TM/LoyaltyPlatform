@@ -49,6 +49,10 @@ export default class UserComponent extends React.Component {
                                 <div className="info-label">Livello Attuale:</div>
                                 <div className="info-value">{iscrizione.livelloCorrente.nome}</div>
                             </div>
+                            <div className="info">
+                                <div className="info-label">Progresso:</div>
+                                <div className="info-value">{iscrizione.progressoLivello + "/" + iscrizione.livelloCorrente.expLevelUp}</div>
+                            </div>
                             <div className="button-col">
                                 <button
                                     className={`button-iscrizione${iscrizione.disiscritto ? '-disabled' : '-enabled'}`}
