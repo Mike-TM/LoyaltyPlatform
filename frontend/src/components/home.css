@@ -1,0 +1,54 @@
+.programmi-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px; /* Aggiunge spazio sopra la lista */
+}
+
+h2.border-bottom {
+    border-bottom: 10px solid #000; /* Linea più spessa di 3px */
+}
+
+.lista-programmi {
+    background-color: #f0f0f0; /* Sfondo grigio leggermente più scuro */
+    padding: 10px; /* Aggiunge spazio intorno al contenuto */
+    border-radius: 10px; /* Rende arrotondato l'angolo dello sfondo */
+    width: 300px; /* Imposta la larghezza del contenitore */
+}
+
+.programma {
+    display: flex;
+    justify-content: space-between;
+    width: 100%; /* Occupa tutto lo spazio disponibile */
+    margin-bottom: 10px; /* Aggiunge spazio tra le righe */
+    padding: 10px; /* Aggiunge spazio intorno al contenuto */
+    background-color: #f9f9f9; /* Sfondo grigio chiaro */
+    border-radius: 10px; /* Rende arrotondati gli angoli */
+}
+
+.programma:nth-child(even) {
+    background-color: #fff;
+}
+
+.programma-nome {
+    flex-grow: 1;
+}
+
+.programma-iscrizione {
+    margin-left: 10px;
+}
+
+.button-iscrizione {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.button-iscrizione:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}

@@ -26,7 +26,6 @@ public abstract class ProgrammaFedelta {
     )
     private Long programmaId;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "id_azienda",
@@ -35,6 +34,7 @@ public abstract class ProgrammaFedelta {
     )
     private Azienda azienda;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
     private List<Iscrizione> iscrizioni;
 

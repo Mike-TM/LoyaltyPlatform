@@ -21,7 +21,8 @@ public class Livello {
     )
     private Long id;
 
-    @ManyToOne @JsonIgnore
+    @ManyToOne
+    @JsonIgnore
     @JoinColumn(
             name = "id_programma",
             referencedColumnName = "id_programma",

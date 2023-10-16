@@ -48,7 +48,7 @@ public class IscrizioneService {
     }
 
     @PostMapping
-    public void registraIscrizione(Long programmaId, Long tesseraId) throws RecordNotFoundException {
+    public void registraIscrizione(Long tesseraId, Long programmaId) throws RecordNotFoundException {
         Tessera tessera = tesseraService.findTesseraById(tesseraId);
         ProgrammaFedelta programma = programmaService.findProgrammaByID(programmaId);
         Iscrizione newIscrizione = factoryIscrizione.creaIscrizione(programma,tessera);

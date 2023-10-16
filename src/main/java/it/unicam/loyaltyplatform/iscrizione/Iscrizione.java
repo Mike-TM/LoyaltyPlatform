@@ -30,7 +30,6 @@ public class Iscrizione {
     private Tessera tessera;
 
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "id_programma",

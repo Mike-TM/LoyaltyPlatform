@@ -54,13 +54,12 @@ public class TesseraService {
         this.tesseraRepository.delete(tessera);
     }
 
-    public Tessera findTesseraByClienteId(long id) throws RecordNotFoundException {
+    public long findTesseraByClienteId(Long id) throws RecordNotFoundException {
         Cliente cliente = clienteService.findClienteById(id);
         Optional<Tessera> tessera = tesseraRepository.findByTitolareTessera(cliente);
-        if(tessera.isPresent()) return tessera.get();
+        if(tessera.isPresent()) return tessera.get().getTesseraId();
         else throw new RecordNotFoundException();
     }
-
 
 }
 

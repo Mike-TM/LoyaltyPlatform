@@ -2,9 +2,13 @@ package it.unicam.loyaltyplatform.ruolo;
 
 import it.unicam.loyaltyplatform.azienda.Azienda;
 import it.unicam.loyaltyplatform.azienda.AziendaRepository;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedelta;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaFedeltaRepository;
-import it.unicam.loyaltyplatform.programmaFedelta.ProgrammaLivelli;
+import it.unicam.loyaltyplatform.azienda.AziendaService;
+import it.unicam.loyaltyplatform.dtos.LivelloDTO;
+import it.unicam.loyaltyplatform.dtos.ProgrammaFedeltaDTO;
+import it.unicam.loyaltyplatform.livello.Livello;
+import it.unicam.loyaltyplatform.livello.LivelloRepository;
+import it.unicam.loyaltyplatform.livello.LivelloService;
+import it.unicam.loyaltyplatform.programmaFedelta.*;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,23 +26,33 @@ public class Config {
     }
 
     @Bean
-    CommandLineRunner aziendapfCommandLineRunner(AziendaRepository repository, ProgrammaFedeltaRepository repositorypf) {
+    CommandLineRunner aziendapfCommandLineRunner(AziendaService aziendaService, ProgrammaFedeltaService programmaFedeltaService, LivelloService livelloService) {
         return args -> {
             Azienda LorisCorp = new Azienda("LorisCorp","sbaraglia@gmail.com");
-            repository.save(LorisCorp);
-            repositorypf.save(new ProgrammaLivelli(LorisCorp,"Loris SuperFedeltà"));
             Azienda TassoniSRL=new Azienda("Tassoni SRL","cedrataspa@gmail.com");
-            repository.save(TassoniSRL);
-            repositorypf.save(new ProgrammaLivelli(TassoniSRL,"Cedrata Tassoni 4free"));
             Azienda SanPellegreinoSPA=new Azienda("San Pellegrino s.p.a.", "limonataspa@gmail.com");
-            repository.save(SanPellegreinoSPA);
-            repositorypf.save(new ProgrammaLivelli(SanPellegreinoSPA,"Aranciata Superiore"));
             Azienda FarmaciaMilesi=new Azienda("Farmacia Milesi", "milesimail@gmail.com");
-            repository.save(FarmaciaMilesi);
-            repositorypf.save(new ProgrammaLivelli(FarmaciaMilesi,"Farmacia Milesi Loyalty"));
             Azienda PizzeriaDaPasquale=new Azienda("Pizzeria da Pasquale", "pasqualemail@gmail.com");
-            repository.save(PizzeriaDaPasquale);
-            repositorypf.save(new ProgrammaLivelli(PizzeriaDaPasquale,"Pasquale Family"));
+            aziendaService.registraAzienda(LorisCorp);
+            aziendaService.registraAzienda(TassoniSRL);
+            aziendaService.registraAzienda(SanPellegreinoSPA);
+            aziendaService.registraAzienda(FarmaciaMilesi);
+            aziendaService.registraAzienda(PizzeriaDaPasquale);
+
+            long id = 1;
+
+            programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Loris SuperFedeltà"));
+            programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Cedrata Tassoni 4free"));
+            programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Aranciata Superiore"));
+            programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Farmacia Milesi Loyalty"));
+            programmaFedeltaService.registraProgrammaFedelta(new ProgrammaFedeltaDTO(TipoProgramma.livelli, id++, "Pasquale Family"));
+
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(1), "Help", 30000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(2), "Help", 30000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(3), "Help", 30000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(4), "Help", 30000));
+            livelloService.aggiungiLivello(new LivelloDTO(new Long(5), "Help", 30000));
+
         };
     }
 

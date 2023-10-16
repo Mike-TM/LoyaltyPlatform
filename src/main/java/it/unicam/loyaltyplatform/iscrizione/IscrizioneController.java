@@ -39,13 +39,10 @@ public class IscrizioneController {
         return iscrizioneService.findIscrizioneByID(id);
     }
 
-    @PostMapping
-    @ResponseStatus(value = HttpStatus.CREATED, reason = "Iscrizione al programma fedeltà avvenuta correttamente.")
-    public void registraIscrizione(@RequestBody IscrizioneDTO iscrizioneDTO) throws RecordNotFoundException {
-        iscrizioneService.registraIscrizione(
-                iscrizioneDTO.getIdProgramma(),
-                iscrizioneDTO.getIdTessera()
-        );
+    @PostMapping(path = "/{tesseraId}/programma/{programmaId}")
+    @ResponseStatus(value = HttpStatus.CREATED)
+    public void registraIscrizione(@PathVariable("tesseraId") Long tesseraId, @PathVariable("programmaId") Long programmaId) throws RecordNotFoundException {
+        iscrizioneService.registraIscrizione(tesseraId, programmaId);
     }
 
     @GetMapping(path = "/vantaggi/{iscrizioneId}")
@@ -65,7 +62,7 @@ public class IscrizioneController {
     }
 
     @DeleteMapping(path = "/{iscrizioneId}")
-    @ResponseStatus(value = HttpStatus.OK, reason = "Cancellazione dell'iscrizione al programma. ")
+    @ResponseStatus(value = HttpStatus.OK)
     public void cancellaIscrizione(@PathVariable("iscrizioneId") Long id) throws RecordNotFoundException{
         iscrizioneService.cancellaIscrizione(id);
     }

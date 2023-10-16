@@ -19,7 +19,8 @@ public class ProgrammaLivelli extends ProgrammaFedelta {
     )
     private Integer ratioExpEuro;
 
-    @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL)
+
+    @OneToMany(mappedBy = "programma", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Livello> livelli;
 
 

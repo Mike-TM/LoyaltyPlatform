@@ -39,10 +39,11 @@ public class Azienda {
     )
     private String email;
 
-    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<ProgrammaFedelta> programmiFedelta;
 
-    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "azienda", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private final List<Accredito> accrediti;
 
     /**

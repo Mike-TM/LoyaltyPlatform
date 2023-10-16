@@ -69,6 +69,8 @@ public class WebSecurityConfig {
                         auth
                                 .requestMatchers("/api/register").permitAll()
                                 .requestMatchers("/api/login").permitAll()
+                                .requestMatchers("/api/programmaFedelta").permitAll()
+                                .requestMatchers("/api/accredito/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
