@@ -9,7 +9,7 @@ class UserService {
         return axios.get(API_URL + '/user', { headers: authHeader() });
     }
 
-    getIscrizioniByCliente(clienteId) {
+    getIscrizioniByCliente(tesseraId) {
         return axios.get(API_URL + `/tessera/${tesseraId}/iscrizioni`, { headers: authHeader() })
     }
 }
