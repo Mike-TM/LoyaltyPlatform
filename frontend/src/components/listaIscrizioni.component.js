@@ -3,7 +3,6 @@ import axios from "axios";
 import authHeader from "../services/auth-header";
 import "./listaIscrizioni.css"
 import authService from "../services/auth.service";
-import AuthService from "../services/auth.service";
 
 export default class UserComponent extends React.Component {
 
@@ -16,9 +15,7 @@ export default class UserComponent extends React.Component {
     }
 
     componentDidMount() {
-        const currentUser = AuthService.getCurrentUser();
-        const idCliente = currentUser.id;
-        axios.get(`/api/tessera/${idCliente}/iscrizioni`, { headers: authHeader() })
+        axios.get(`/api/tessera/${authService.getCurrentUser().tesseraId}/iscrizioni`, { headers: authHeader() })
             .then(response => {
                 this.setState({ iscrizioniUtente: response.data });
             })
@@ -73,7 +70,6 @@ export default class UserComponent extends React.Component {
     }
 
     handleDisiscriviti = (iscrizioneId) => {
-        const currentUser = authService.getCurrentUser();
 
             axios.delete(`/api/iscrizione/${iscrizioneId}`,{ headers: authHeader() })
                 .then(response => {
